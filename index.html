@@ -1,0 +1,1935 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Alif Med — Past Year Exams</title>
+<style>
+  :root {
+    --bg: #0d1117;
+    --bg-2: #161b22;
+    --bg-3: #1c2230;
+    --card: #151b26;
+    --border: #232b3a;
+    --text: #e6edf3;
+    --text-dim: #8b949e;
+    --accent: #e91e63;
+    --accent-2: #7c4dff;
+    --green: #2ecc71;
+    --green-bg: #143d29;
+    --red: #e74c3c;
+    --red-bg: #3d1a1a;
+    --blue: #4d9fff;
+    --radius: 14px;
+    --radius-sm: 10px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+  html, body { height: 100%; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.5;
+  }
+  button { font-family: inherit; cursor: pointer; border: none; background: none; color: inherit; }
+
+  #app { min-height: 100vh; display: flex; flex-direction: column; padding-bottom: 70px; }
+
+  .topbar {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 14px 16px;
+    position: sticky; top: 0; z-index: 20;
+    background: rgba(13,17,23,0.95);
+    backdrop-filter: blur(10px);
+  }
+  .logo-wrap { display: flex; align-items: center; gap: 10px; }
+  .logo-badge {
+    width: 34px; height: 34px; border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, #7c4dff, #4d9fff);
+    display: grid; place-items: center;
+    font-weight: 700; font-size: 11px; color: #fff;
+  }
+  .logo-text { font-size: 18px; font-weight: 700; }
+  .avatar {
+    width: 34px; height: 34px; border-radius: 50%;
+    background: var(--bg-3); border: 1px solid var(--border);
+    display: grid; place-items: center; font-size: 11px; font-weight: 600; color: var(--text-dim);
+  }
+
+  .search-wrap {
+    margin: 6px 16px 14px;
+    display: flex; align-items: center; gap: 10px;
+    background: var(--bg-2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 12px 14px;
+  }
+  .search-wrap svg { flex-shrink: 0; opacity: 0.6; }
+  .search-wrap input {
+    flex: 1; background: none; border: none; outline: none;
+    color: var(--text); font-size: 14px;
+  }
+  .search-wrap input::placeholder { color: var(--text-dim); }
+
+  .tabs {
+    display: flex; gap: 8px;
+    margin: 0 16px 16px;
+    background: var(--bg-2);
+    padding: 6px;
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+  }
+  .tab {
+    flex: 1; padding: 10px; border-radius: var(--radius-sm);
+    font-size: 13px; font-weight: 600; color: var(--text-dim);
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+  }
+  .tab.active { background: var(--bg-3); color: var(--text); }
+
+  .list { padding: 0 16px; display: flex; flex-direction: column; gap: 12px; }
+  .exam-card {
+    display: flex; align-items: center; gap: 14px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 16px;
+    text-align: left;
+    width: 100%;
+    transition: transform 0.15s, border-color 0.2s;
+  }
+  .exam-card:active { transform: scale(0.985); }
+  .exam-card:hover { border-color: var(--accent); }
+  .exam-thumb {
+    width: 44px; height: 44px; border-radius: 12px;
+    background: var(--bg-3); border: 1px solid var(--border);
+    display: grid; place-items: center; flex-shrink: 0;
+    font-size: 20px;
+  }
+  .exam-body { flex: 1; min-width: 0; }
+  .exam-tags { display: flex; gap: 6px; margin-bottom: 6px; flex-wrap: wrap; }
+  .tag {
+    font-size: 10px; font-weight: 700; letter-spacing: 0.6px;
+    padding: 3px 8px; border-radius: 6px; text-transform: uppercase;
+  }
+  .tag.subject { color: #ff8bc4; background: rgba(233,30,99,0.12); }
+  .tag.topic { color: var(--blue); background: rgba(77,159,255,0.12); }
+  .exam-title { font-size: 15px; font-weight: 700; margin-bottom: 4px; color: var(--text); }
+  .exam-meta { font-size: 12px; color: var(--text-dim); }
+  .progress-bar {
+    margin-top: 8px; height: 4px; background: var(--bg-3); border-radius: 2px; overflow: hidden;
+  }
+  .progress-fill { height: 100%; background: linear-gradient(90deg, var(--accent), var(--accent-2)); }
+  .empty-state { text-align: center; padding: 60px 20px; color: var(--text-dim); font-size: 14px; }
+
+  .bottom-nav {
+    position: fixed; bottom: 0; left: 0; right: 0;
+    background: rgba(13,17,23,0.96);
+    backdrop-filter: blur(12px);
+    border-top: 1px solid var(--border);
+    display: flex; justify-content: space-around;
+    padding: 8px 0 10px;
+    z-index: 30;
+  }
+  .nav-item {
+    display: flex; flex-direction: column; align-items: center; gap: 3px;
+    font-size: 10px; color: var(--text-dim); font-weight: 600;
+    padding: 4px 12px;
+  }
+  .nav-item.active { color: var(--accent); }
+  .nav-item svg { width: 22px; height: 22px; }
+
+  /* QUIZ */
+  .quiz-header {
+    display: flex; align-items: center; gap: 12px;
+    padding: 12px 16px;
+    position: sticky; top: 0; z-index: 20;
+    background: rgba(13,17,23,0.95);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border);
+  }
+  .icon-btn {
+    width: 38px; height: 38px; border-radius: 10px;
+    background: var(--bg-3); border: 1px solid var(--border);
+    display: grid; place-items: center; flex-shrink: 0;
+  }
+  .icon-btn:active { background: var(--border); }
+  .quiz-header-info { flex: 1; text-align: center; }
+  .quiz-header-title { font-size: 14px; font-weight: 700; }
+  .quiz-header-count { font-size: 11px; color: var(--text-dim); margin-top: 1px; }
+
+  .quiz-body { padding: 16px; flex: 1; }
+  .breadcrumb {
+    font-size: 11px; font-weight: 700; letter-spacing: 0.8px;
+    color: var(--text-dim); text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .breadcrumb .dot { color: var(--accent); margin: 0 6px; }
+  .quiz-title { font-size: 24px; font-weight: 800; margin-bottom: 6px; }
+  .quiz-section {
+    font-size: 13px; color: var(--text-dim); font-style: italic;
+    padding-bottom: 14px; border-bottom: 1px solid var(--border); margin-bottom: 20px;
+  }
+
+  .q-tag-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+  .q-number { font-size: 13px; font-weight: 700; color: var(--text-dim); }
+  .q-topic {
+    font-size: 10px; font-weight: 700; letter-spacing: 0.6px;
+    padding: 3px 8px; border-radius: 6px;
+    color: var(--blue); background: rgba(77,159,255,0.12);
+    text-transform: uppercase; margin-left: 8px;
+  }
+
+  .q-text { font-size: 17px; font-weight: 600; line-height: 1.55; margin-bottom: 20px; }
+
+  .options { display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px; }
+  .option {
+    display: flex; align-items: flex-start; gap: 12px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 14px 16px;
+    text-align: left;
+    font-size: 14px; line-height: 1.5;
+    color: var(--text);
+    transition: all 0.2s;
+    width: 100%;
+  }
+  .option:hover:not(.locked) { border-color: var(--accent); }
+  .option .letter {
+    width: 26px; height: 26px; border-radius: 8px;
+    background: var(--bg-3); border: 1px solid var(--border);
+    display: grid; place-items: center;
+    font-size: 12px; font-weight: 700; color: var(--text-dim);
+    flex-shrink: 0;
+  }
+  .option.correct { background: var(--green-bg); border-color: var(--green); }
+  .option.correct .letter { background: var(--green); color: #fff; border-color: var(--green); }
+  .option.wrong { background: var(--red-bg); border-color: var(--red); }
+  .option.wrong .letter { background: var(--red); color: #fff; border-color: var(--red); }
+  .option.locked { cursor: default; }
+
+  .result-row { display: flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 700; margin-bottom: 16px; }
+  .result-row.correct { color: var(--green); }
+  .result-row.wrong { color: var(--red); }
+
+  .action-btns { display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; }
+  .action-btn {
+    padding: 10px 18px; border-radius: 999px;
+    background: var(--bg-3); border: 1px solid var(--border);
+    font-size: 13px; font-weight: 600;
+  }
+  .action-btn.active { background: var(--accent); border-color: var(--accent); color: #fff; }
+
+  .explanation {
+    background: var(--bg-2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 18px;
+    margin-bottom: 20px;
+  }
+  .explanation-label {
+    font-size: 11px; font-weight: 800; letter-spacing: 1px;
+    color: var(--blue); text-transform: uppercase;
+    margin-bottom: 12px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .explanation-label::before {
+    content: ''; width: 18px; height: 2px; background: var(--blue); border-radius: 1px;
+  }
+  .explanation-text { font-size: 14px; line-height: 1.7; color: #c9d1d9; }
+  .explanation-text strong { color: var(--text); }
+
+  .related { display: flex; align-items: center; gap: 8px; margin-bottom: 20px; font-size: 12px; color: var(--text-dim); }
+  .related-btn {
+    padding: 5px 12px; border-radius: 8px;
+    background: var(--bg-3); border: 1px solid var(--border);
+    font-size: 11px; font-weight: 600; color: var(--text);
+  }
+
+  .nav-buttons { display: flex; gap: 10px; margin-top: 8px; }
+  .nav-btn {
+    flex: 1; padding: 14px; border-radius: var(--radius);
+    font-size: 14px; font-weight: 700;
+    background: var(--bg-3); border: 1px solid var(--border);
+  }
+  .nav-btn.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+  .nav-btn:disabled { opacity: 0.35; cursor: not-allowed; }
+
+  .q-nav {
+    display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 20px;
+    padding: 14px; background: var(--bg-2); border: 1px solid var(--border); border-radius: var(--radius);
+  }
+  .q-nav-btn {
+    width: 34px; height: 34px; border-radius: 8px;
+    background: var(--bg-3); border: 1px solid var(--border);
+    font-size: 12px; font-weight: 700; color: var(--text-dim);
+  }
+  .q-nav-btn.current { background: var(--accent); color: #fff; border-color: var(--accent); }
+  .q-nav-btn.answered-correct { background: var(--green-bg); color: var(--green); border-color: var(--green); }
+  .q-nav-btn.answered-wrong { background: var(--red-bg); color: var(--red); border-color: var(--red); }
+
+  .toast {
+    position: fixed; bottom: 90px; left: 50%; transform: translateX(-50%) translateY(20px);
+    background: var(--bg-3); border: 1px solid var(--border);
+    padding: 12px 20px; border-radius: 12px;
+    font-size: 13px; font-weight: 600;
+    opacity: 0; pointer-events: none; transition: all 0.3s;
+    z-index: 100; white-space: nowrap;
+  }
+  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+  @media (min-width: 700px) {
+    #app { max-width: 640px; margin: 0 auto; }
+    .bottom-nav { max-width: 640px; left: 50%; transform: translateX(-50%); }
+  }
+</style>
+</head>
+<body>
+
+<div id="app"></div>
+<div class="toast" id="toast"></div>
+
+<script>
+/* =====================================================================
+   ██  QUIZ DATA — ADD YOUR QUESTIONS & SUBJECTS HERE  ██
+   =====================================================================
+   To add a new exam: copy one block { ... } and paste it in the array,
+   separated by a comma.
+   ===================================================================== */
+
+const QUIZ_DATA = [
+  {
+    id: "anatomy-2018",
+    subject: "Anatomy",
+    topic: "CVS",
+    year: 2018,
+    title: "Anatomy 2018",
+    icon: "🫀",
+    section: "PLATE I — Histology of vessels",
+    questions: [
+      {
+        q: "Select the correct description about the wall of the cardiovascular system:",
+        options: [
+          { letter: "A", text: "Arteries are characterized by a more developed tunica adventitia than their corresponding veins." },
+          { letter: "B", text: "Tunica intima and media are well-developed and thicker in veins than their corresponding arteries." },
+          { letter: "C", text: "Endocardium of the heart is homologous with the tunica media of blood vessels." },
+          { letter: "D", text: "Arterioles lack a subendothelial connective tissue layer and internal and external elastic laminae." },
+          { letter: "E", text: "Arteries have a wider lumen relative to the thickness of their walls." }
+        ],
+        correct: "D",
+        explanation: "<strong>Arterioles</strong> are the smallest arteries and have a simplified structure. They <strong>lack a subendothelial connective tissue layer</strong> and lack distinct <strong>internal and external elastic laminae</strong>. This structural simplification allows them to function as <strong>resistance vessels</strong> — their diameter changes to regulate blood pressure and flow into capillaries.<br><br><strong>Clinical relevance:</strong> In hypertension, arterioles undergo <strong>hyaline arteriosclerosis</strong> (thickening of the vessel wall, narrowing of the lumen) causing end-organ damage (kidney: nephrosclerosis; brain: lacunar infarcts).",
+        related: ["Q11", "Q13"]
+      },
+      {
+        q: "The cardiovascular system is histologically composed of the following tissues, except:",
+        options: [
+          { letter: "A", text: "Simple squamous epithelium (endothelium)" },
+          { letter: "B", text: "Smooth muscle tissue" },
+          { letter: "C", text: "Cardiac muscle tissue" },
+          { letter: "D", text: "Reticular connective tissue" },
+          { letter: "E", text: "Elastic connective tissue" }
+        ],
+        correct: "D",
+        explanation: "The cardiovascular system is composed of <strong>endothelium</strong> (simple squamous epithelium), <strong>smooth muscle</strong> (tunica media of vessels), <strong>cardiac muscle</strong> (in the heart), and <strong>elastic connective tissue</strong> (large arteries). <strong>Reticular connective tissue</strong> is characteristic of lymphoid organs (lymph nodes, spleen, bone marrow), not the cardiovascular system."
+      },
+      {
+        q: "Which layer of the blood vessel wall is responsible for vasoconstriction and vasodilation?",
+        options: [
+          { letter: "A", text: "Tunica intima" },
+          { letter: "B", text: "Tunica media" },
+          { letter: "C", text: "Tunica adventitia" },
+          { letter: "D", text: "Endocardium" },
+          { letter: "E", text: "Subendothelial layer" }
+        ],
+        correct: "B",
+        explanation: "The <strong>tunica media</strong> is the middle layer of the blood vessel wall and is composed primarily of <strong>smooth muscle cells</strong> and elastic fibers. It is responsible for <strong>vasoconstriction and vasodilation</strong>, regulating vessel diameter, blood pressure, and blood flow."
+      },
+      {
+        q: "The vasa vasorum are found primarily in which layer of large blood vessels?",
+        options: [
+          { letter: "A", text: "Tunica intima" },
+          { letter: "B", text: "Tunica media" },
+          { letter: "C", text: "Tunica adventitia" },
+          { letter: "D", text: "Endothelium" },
+          { letter: "E", text: "Basement membrane" }
+        ],
+        correct: "C",
+        explanation: "<strong>Vasa vasorum</strong> (\"vessels of the vessels\") are small blood vessels that supply the walls of large arteries and veins. They are found primarily in the <strong>tunica adventitia</strong> and the outer part of the tunica media, since these layers are too thick to be nourished by diffusion from the lumen alone."
+      },
+      {
+        q: "Which type of capillaries are characterized by the presence of pores (fenestrations) in their endothelial cells?",
+        options: [
+          { letter: "A", text: "Continuous capillaries" },
+          { letter: "B", text: "Fenestrated capillaries" },
+          { letter: "C", text: "Sinusoidal capillaries" },
+          { letter: "D", text: "Lymphatic capillaries" },
+          { letter: "E", text: "Arteriovenous capillaries" }
+        ],
+        correct: "B",
+        explanation: "<strong>Fenestrated capillaries</strong> have <strong>pores (fenestrations)</strong> in their endothelial cells that allow rapid exchange of fluids and small molecules. They are found in organs with high absorption or filtration, such as the <strong>kidney, intestines, and endocrine glands</strong>."
+      },
+      {
+        q: "The endocardium is homologous to which layer of blood vessels?",
+        options: [
+          { letter: "A", text: "Tunica adventitia" },
+          { letter: "B", text: "Tunica media" },
+          { letter: "C", text: "Tunica intima" },
+          { letter: "D", text: "Vasa vasorum" },
+          { letter: "E", text: "Myocardium" }
+        ],
+        correct: "C",
+        explanation: "The <strong>endocardium</strong> is the innermost layer of the heart wall and is <strong>homologous to the tunica intima</strong> of blood vessels. Both consist of an endothelium, a subendothelial layer, and in some cases an internal elastic lamina."
+      },
+      {
+        q: "Which of the following is the largest artery in the human body?",
+        options: [
+          { letter: "A", text: "Pulmonary artery" },
+          { letter: "B", text: "Aorta" },
+          { letter: "C", text: "Carotid artery" },
+          { letter: "D", text: "Femoral artery" },
+          { letter: "E", text: "Renal artery" }
+        ],
+        correct: "B",
+        explanation: "The <strong>aorta</strong> is the largest artery in the human body. It arises from the left ventricle and distributes oxygenated blood to all parts of the body. It is an elastic artery with many elastic lamellae in its tunica media."
+      },
+      {
+        q: "Which of the following statements about veins is correct?",
+        options: [
+          { letter: "A", text: "Veins have a thicker tunica media than arteries." },
+          { letter: "B", text: "Veins have a thinner tunica media and a thicker tunica adventitia than arteries." },
+          { letter: "C", text: "Veins lack a tunica intima." },
+          { letter: "D", text: "Veins have no valves." },
+          { letter: "E", text: "Veins contain more elastic fibers than arteries." }
+        ],
+        correct: "B",
+        explanation: "Compared with arteries, <strong>veins have a thinner tunica media</strong> and a <strong>thicker tunica adventitia</strong>. Veins also have a <strong>wider lumen</strong> and often contain <strong>valves</strong> (especially in the lower limbs) to prevent backflow."
+      },
+      {
+        q: "Purkinje fibers are specialized cardiac muscle cells that are primarily responsible for:",
+        options: [
+          { letter: "A", text: "Secreting hormones" },
+          { letter: "B", text: "Conducting electrical impulses rapidly through the heart" },
+          { letter: "C", text: "Contracting to pump blood out of the heart" },
+          { letter: "D", text: "Forming the fibrous skeleton of the heart" },
+          { letter: "E", text: "Storing glycogen only" }
+        ],
+        correct: "B",
+        explanation: "<strong>Purkinje fibers</strong> are specialized cardiac muscle cells that form the conduction system of the heart. They are responsible for <strong>rapidly conducting electrical impulses</strong> from the AV node to the ventricular myocardium, ensuring coordinated contraction."
+      },
+      {
+        q: "Which of the following is NOT a characteristic of cardiac muscle?",
+        options: [
+          { letter: "A", text: "Striated appearance" },
+          { letter: "B", text: "Single centrally located nucleus" },
+          { letter: "C", text: "Intercalated discs" },
+          { letter: "D", text: "Voluntary control" },
+          { letter: "E", text: "Branching fibers" }
+        ],
+        correct: "D",
+        explanation: "Cardiac muscle is <strong>involuntary</strong> — it is not under conscious control. Its characteristics include a <strong>striated appearance</strong>, <strong>single centrally located nucleus</strong>, <strong>intercalated discs</strong>, and <strong>branching fibers</strong>."
+      }
+    ]
+  }
+
+  /* =====================================================================
+     ADD MORE EXAMS HERE — separate each block with a comma.
+     Example:
+
+     ,{
+       id: "physiology-2019",
+       subject: "Physiology",
+       topic: "Cardiac",
+       year: 2019,
+       title: "Physiology 2019",
+       icon: "🧠",
+       section: "PLATE I — Cardiac physiology",
+       questions: [
+         {
+           q: "Your question here?",
+           options: [
+             { letter: "A", text: "Option A" },
+             { letter: "B", text: "Option B" },
+             { letter: "C", text: "Option C" },
+             { letter: "D", text: "Option D" },
+             { letter: "E", text: "Option E" }
+           ],
+           correct: "A",
+           explanation: "Your explanation here."
+         }
+       ]
+     }
+
+     ===================================================================== */
+
+     /* =====================================================================
+     ADD MORE EXAMS HERE — separate each block with a comma.
+     Example:
+
+     ,{
+       id: "physiology-2019",
+       subject: "Physiology",
+       topic: "Cardiac",
+       year: 2019,
+       title: "Physiology 2019",
+       icon: "🧠",
+       section: "PLATE I — Cardiac physiology",
+       questions: [
+         {
+           q: "Your question here?",
+           options: [
+             { letter: "A", text: "Option A" },
+             { letter: "B", text: "Option B" },
+             { letter: "C", text: "Option C" },
+             { letter: "D", text: "Option D" },
+             { letter: "E", text: "Option E" }
+           ],
+           correct: "A",
+           explanation: "Your explanation here."
+         }
+       ]
+     }
+
+     ===================================================================== */
+  ,{
+    id: "embryo-2017",
+    subject: "Embryology",
+    topic: "Respiratory System",
+    year: 2017,
+    title: "Embryology 2017",
+    icon: "🫁",
+    section: "Laryngeal & Lung Development",
+    questions: [
+      {
+        q: "Recanalization of the larynx, which restores the laryngeal lumen, occurs approximately at which week of embryonic development?",
+        options: [
+          { letter: "A", text: "4th week" },
+          { letter: "B", text: "6th week" },
+          { letter: "C", text: "10th week" },
+          { letter: "D", text: "16th week" }
+        ],
+        correct: "C",
+        explanation: "After formation of the primordial laryngeal inlet, the laryngeal lumen is temporarily occluded by proliferation of its epithelial lining during weeks 5–6. <strong>Recanalization</strong> (re-opening of the lumen) occurs around the <strong>10th week</strong>, restoring the laryngeal airway and shaping the laryngeal inlet, false vocal cords, true vocal cords, and ventricles."
+      },
+      {
+        q: "In which stage of lung maturation does the lung become highly vascularized and the blood-air barrier begin to form?",
+        options: [
+          { letter: "A", text: "Pseudoglandular stage" },
+          { letter: "B", text: "Canalicular stage" },
+          { letter: "C", text: "Saccular stage" },
+          { letter: "D", text: "Alveolar stage" }
+        ],
+        correct: "B",
+        explanation: "During the <strong>canalicular stage (weeks 16–26)</strong>, lung tissue becomes richly vascularized and the respiratory epithelium begins to thin, bringing capillaries into intimate contact with developing airways. This is where the <strong>blood-air barrier begins to form</strong>, though it is not fully established until the saccular stage."
+      },
+      {
+        q: "In which stage of lung maturation do respiratory bronchioles first develop?",
+        options: [
+          { letter: "A", text: "Pseudoglandular stage" },
+          { letter: "B", text: "Canalicular stage" },
+          { letter: "C", text: "Saccular stage" },
+          { letter: "D", text: "Alveolar stage" }
+        ],
+        correct: "B",
+        explanation: "<strong>Respiratory bronchioles</strong> (the first part of the respiratory zone containing some alveoli) first appear during the <strong>canalicular stage (weeks 16–26)</strong> as the terminal bronchioles divide into two or more respiratory bronchioles, which then divide into 3–6 alveolar ducts."
+      },
+      {
+        q: "In which stage of lung maturation does the fetus have a chance of survival if born prematurely, but typically develops respiratory distress due to borderline surfactant levels?",
+        options: [
+          { letter: "A", text: "Pseudoglandular stage" },
+          { letter: "B", text: "Canalicular stage" },
+          { letter: "C", text: "Saccular stage" },
+          { letter: "D", text: "Alveolar stage" }
+        ],
+        correct: "C",
+        explanation: "The <strong>saccular (terminal sac) stage</strong> (weeks 26–birth) is the earliest period where a premature fetus has a chance of survival — the blood-air barrier is established and Type II pneumocytes produce surfactant. However, surfactant levels are often still <strong>borderline</strong>, leading to a high risk of <strong>Respiratory Distress Syndrome (RDS)</strong>."
+      },
+      {
+        q: "The epiglottis develops from:",
+        options: [
+          { letter: "A", text: "Caudal part of the hypopharyngeal eminence" },
+          { letter: "B", text: "Respiratory diverticulum" },
+          { letter: "C", text: "Mesenchyme of 4th and 6th pharyngeal arches" },
+          { letter: "D", text: "Cranial-most part of laryngotracheal tube" }
+        ],
+        correct: "A",
+        explanation: "The <strong>epiglottis develops from the caudal part of the hypopharyngeal (hypobranchial) eminence</strong>. The hypopharyngeal eminence is mainly derived from mesenchyme of the 3rd and 4th pharyngeal arches, with the epiglottic region particularly associated with the <strong>4th arch</strong>."
+      }
+    ]
+  }
+
+
+    ,{
+    id: "physio-2014",
+    subject: "Physiology",
+    topic: "Respiratory",
+    year: 2014,
+    title: "Physiology 2014 E.C",
+    icon: "🧠",
+    section: "Respiratory Physiology",
+    questions: [
+      {
+        q: "Which is wrong about shift of the Hb-oxygen dissociation curve of blood to the right?",
+        options: [
+          { letter: "A", text: "Occurs in the pulmonary capillaries" },
+          { letter: "B", text: "Occurs if blood temperature rises" },
+          { letter: "C", text: "Favors oxygen delivery to the tissues" },
+          { letter: "D", text: "Favors hydrogen binding to O₂" },
+          { letter: "E", text: "Increases percent blood oxygen saturation" }
+        ],
+        correct: "D",
+        explanation: "A <strong>rightward shift</strong> represents decreased affinity of hemoglobin for oxygen, facilitating oxygen unloading to active tissues. It is triggered by increased temperature, increased PCO₂, and increased H⁺. Option D is wrong because hydrogen ions bind to the <strong>amino acid chains of hemoglobin</strong> (the Bohr effect), not to O₂ molecules. Memory: <strong>Right = Release O₂</strong>."
+      },
+      {
+        q: "Which is wrong about Vital Capacity?",
+        options: [
+          { letter: "A", text: "The volume of air expired from full inspiration to full expiration" },
+          { letter: "B", text: "Reduced as one grows older" },
+          { letter: "C", text: "Greater in men than in women of the same age and height" },
+          { letter: "D", text: "Not related more to total body mass than to lean body mass" },
+          { letter: "E", text: "The sum of the inspiratory and expiratory reserve volumes" }
+        ],
+        correct: "E",
+        explanation: "Vital Capacity (VC) = <strong>Tidal Volume (TV) + Inspiratory Reserve Volume (IRV) + Expiratory Reserve Volume (ERV)</strong>. Option E omits the tidal volume, so it is incorrect. Residual volume is <em>not</em> included in VC."
+      },
+      {
+        q: "In pulmonary capillary blood:",
+        options: [
+          { letter: "A", text: "Carbonic anhydrase in erythrocytes catalyses the formation of H⁺ and HCO₃⁻" },
+          { letter: "B", text: "Hydrogen ions dissociate from hemoglobin" },
+          { letter: "C", text: "The fall in PO₂ is of greater magnitude than the fall in PCO₂" },
+          { letter: "D", text: "The oxygen content is linearly related to alveolar PO₂" },
+          { letter: "E", text: "The pH is higher than in blood in the pulmonary artery" }
+        ],
+        correct: "E",
+        explanation: "As blood flows through pulmonary capillaries, CO₂ diffuses out into the alveoli. This drives the bicarbonate buffer equation in reverse, <strong>consuming free H⁺</strong>. As a result, pH rises — pulmonary capillary blood is more <strong>alkaline</strong> than mixed venous blood in the pulmonary artery. In the lungs: CO₂ leaves → H⁺ decreases → pH increases."
+      },
+      {
+        q: "Complete obstruction of a major bronchus usually results in:",
+        options: [
+          { letter: "A", text: "Collapse of the alveoli supplied by the bronchus" },
+          { letter: "B", text: "A rise in local intrapleural pressure" },
+          { letter: "C", text: "An increase in physiological dead space" },
+          { letter: "D", text: "An increase in blood flow to the lung tissue supplied by the bronchus" },
+          { letter: "E", text: "Hypoxemia" }
+        ],
+        correct: "A",
+        explanation: "Complete blockage prevents fresh air from entering the distal airway. Trapped air is rapidly absorbed into local capillary blood, causing the alveoli to completely deflate — a condition called <strong>absorption atelectasis</strong>."
+      },
+      {
+        q: "Lack of surfactant substances as occurs in infants with respiratory distress syndrome (RDS) results in:",
+        options: [
+          { letter: "A", text: "An increased lung compliance" },
+          { letter: "B", text: "Stabilization of alveolar volume" },
+          { letter: "C", text: "An increased retroactive force of the lungs by increasing alveolar surface tension" },
+          { letter: "D", text: "A reduced alveolar-arterial O₂ tension difference" },
+          { letter: "E", text: "A decrease in the filtration forces in the pulmonary capillaries" }
+        ],
+        correct: "C",
+        explanation: "Surfactant reduces surface tension at the air-water interface. Without it, alveolar surface tension rises drastically, increasing the <strong>elastic recoil (retroactive force)</strong> of the lungs, causing stiff lungs and widespread alveolar collapse."
+      },
+      {
+        q: "The total lung capacity consists of:",
+        options: [
+          { letter: "A", text: "Vital capacity & tidal volume" },
+          { letter: "B", text: "Residual volume & vital capacity" },
+          { letter: "C", text: "Functional residual capacity & vital capacity" },
+          { letter: "D", text: "Tidal volume & functional residual capacity" },
+          { letter: "E", text: "Tidal volume & residual volume" }
+        ],
+        correct: "B",
+        explanation: "<strong>Total Lung Capacity (TLC) = Vital Capacity (VC) + Residual Volume (RV)</strong>. It represents the entire volume of air the lungs can hold after maximal inspiration."
+      },
+      {
+        q: "The respiratory center responsible for the rhythm of respiration is located in the:",
+        options: [
+          { letter: "A", text: "Ventral respiratory group" },
+          { letter: "B", text: "Apneustic center" },
+          { letter: "C", text: "Dorsal respiratory group" },
+          { letter: "D", text: "Pneumotaxic center" },
+          { letter: "E", text: "Somewhere in the pons" }
+        ],
+        correct: "C",
+        explanation: "The <strong>Dorsal Respiratory Group (DRG)</strong>, located in the medulla oblongata, contains inspiratory neurons that generate the basic rhythmic drive for quiet breathing by sending a repetitive \"ramp\" signal to the diaphragm. The VRG becomes more important during forced breathing."
+      },
+      {
+        q: "All of the following events occur during expiration except:",
+        options: [
+          { letter: "A", text: "Inspiratory muscles relax and the rib cage descends due to gravity" },
+          { letter: "B", text: "Thoracic cavity volume decreases" },
+          { letter: "C", text: "Intrapulmonary volume decreases" },
+          { letter: "D", text: "Intrapulmonary pressure rises above atmospheric pressure (+1 mm Hg)" },
+          { letter: "E", text: "Gases flow out of the lungs against the pressure gradient" }
+        ],
+        correct: "E",
+        explanation: "During expiration, air flows <strong>with (down) the pressure gradient</strong> — from higher pressure in the lungs to lower atmospheric pressure — not against it. All other statements are correct."
+      },
+      {
+        q: "Which of the following is NOT the function of surfactant?",
+        options: [
+          { letter: "A", text: "Increases surface area" },
+          { letter: "B", text: "Decreases pressure in the alveoli" },
+          { letter: "C", text: "Prevents lung collapse" },
+          { letter: "D", text: "Increases work of breathing" },
+          { letter: "E", text: "Facilitates gas exchange" }
+        ],
+        correct: "D",
+        explanation: "Surfactant <strong>increases lung compliance</strong>, which <strong>decreases</strong> the work of breathing by making the lungs easier to expand. It does not increase work of breathing."
+      },
+      {
+        q: "The peripheral chemoreceptors are:",
+        options: [
+          { letter: "A", text: "Located on the ventral surface of the medulla oblongata" },
+          { letter: "B", text: "More sensitive to CO₂" },
+          { letter: "C", text: "Excited when PaO₂ is low" },
+          { letter: "D", text: "Inactive during acidosis" },
+          { letter: "E", text: "More sensitive to H⁺" }
+        ],
+        correct: "C",
+        explanation: "Peripheral chemoreceptors (in the <strong>carotid and aortic bodies</strong>) are uniquely sensitive to arterial hypoxemia. They are strongly stimulated when <strong>PaO₂ falls below ~60 mmHg</strong>. Central chemoreceptors, located on the ventral medulla, respond primarily to CO₂ and pH."
+      },
+      {
+        q: "Which structure does NOT belong to the respiratory portion of the breathing organ?",
+        options: [
+          { letter: "A", text: "Terminal bronchioles" },
+          { letter: "B", text: "Respiratory bronchioles" },
+          { letter: "C", text: "Alveolar ducts" },
+          { letter: "D", text: "Alveolar sacs" },
+          { letter: "E", text: "None of the above" }
+        ],
+        correct: "A",
+        explanation: "<strong>Terminal bronchioles</strong> are the final branches of the <strong>conducting zone</strong> — they contain no alveoli and cannot participate in gas exchange. The respiratory portion begins at the respiratory bronchioles."
+      },
+      {
+        q: "Which one of the following is wrong about the normal oxygen tension?",
+        options: [
+          { letter: "A", text: "Venous blood = 40 mmHg" },
+          { letter: "B", text: "Arterial blood = 95 mmHg" },
+          { letter: "C", text: "Alveolar air = 104 mmHg" },
+          { letter: "D", text: "Inspired air = 159 mmHg" },
+          { letter: "E", text: "In the tissue > 40 mmHg" }
+        ],
+        correct: "E",
+        explanation: "Normal cellular metabolism continuously consumes oxygen, keeping tissue PO₂ <strong>≤ 40 mmHg</strong> (typically 23–40 mmHg). This low tissue tension creates the steep pressure gradient needed for oxygen to diffuse from arterial blood into tissues. Option E stating \"> 40\" is wrong."
+      },
+      {
+        q: "Which structure is responsible for respiratory rate and depth of breathing?",
+        options: [
+          { letter: "A", text: "Ventral respiratory group" },
+          { letter: "B", text: "Dorsal respiratory group" },
+          { letter: "C", text: "Apneustic center" },
+          { letter: "D", text: "Pneumotaxic center" },
+          { letter: "E", text: "Cerebral cortex" }
+        ],
+        correct: "D",
+        explanation: "The <strong>pneumotaxic center</strong>, located in the upper pons, acts as an \"off-switch\" for the inspiratory ramp. By limiting the duration of inspiration, it directly regulates <strong>depth</strong> and secondarily regulates <strong>rate</strong> (stronger pneumotaxic signal → shallow, rapid breaths)."
+      },
+      {
+        q: "Possible mechanisms that would increase the rate of pleural fluid formation include:",
+        options: [
+          { letter: "A", text: "Decreased permeability of the pleural capillaries" },
+          { letter: "B", text: "Decreased hydrostatic pressure in the pleural capillaries" },
+          { letter: "C", text: "High colloid osmotic (oncotic) pressure in the pleural capillaries" },
+          { letter: "D", text: "Obstruction of the pulmonary lymphatic channels" },
+          { letter: "E", text: "None of the above" }
+        ],
+        correct: "D",
+        explanation: "Pleural fluid is produced by pleural capillaries and drained by lymphatics. <strong>Obstructing lymphatic drainage</strong> causes fluid accumulation in the pleural space, leading to pleural effusion."
+      },
+      {
+        q: "Bronchial obstruction is likely to be relieved by:",
+        options: [
+          { letter: "A", text: "Stimulation of cholinergic receptors" },
+          { letter: "B", text: "Stimulation of beta adrenoceptors" },
+          { letter: "C", text: "Histamine" },
+          { letter: "D", text: "Stimulation of mast cell membranes" },
+          { letter: "E", text: "Slow reactive substance of anaphylaxis" }
+        ],
+        correct: "B",
+        explanation: "Bronchial smooth muscle contains <strong>beta-2 adrenergic receptors</strong>. Activating them (via sympathetic stimulation or beta-agonist medications like albuterol) relaxes smooth muscle, causing <strong>bronchodilation</strong>. Cholinergic stimulation, histamine, and anaphylactic substances all cause bronchoconstriction."
+      },
+      {
+        q: "The CO₂ dissociation curve for whole blood shows that:",
+        options: [
+          { letter: "A", text: "Its shape is sigmoid" },
+          { letter: "B", text: "Blood saturates with CO₂ when PCO₂ exceeds normal alveolar levels" },
+          { letter: "C", text: "Blood contains some CO₂ even when the PCO₂ is zero" },
+          { letter: "D", text: "Oxygenation of the blood drives CO₂ out of the blood" },
+          { letter: "E", text: "Adding CO₂ to the blood drives O₂ out of the blood" }
+        ],
+        correct: "D",
+        explanation: "This is the <strong>Haldane effect</strong>. When oxygen binds to hemoglobin in the lungs, it alters the molecule's structure, reducing its affinity for CO₂ and H⁺, helping release bound CO₂ into the alveoli for exhalation."
+      },
+      {
+        q: "Of the following, identify an important chemical buffer:",
+        options: [
+          { letter: "A", text: "CO₂" },
+          { letter: "B", text: "O₂" },
+          { letter: "C", text: "H⁺" },
+          { letter: "D", text: "Hb" },
+          { letter: "E", text: "All" }
+        ],
+        correct: "D",
+        explanation: "<strong>Hemoglobin (Hb)</strong> is a highly effective intracellular buffer in red blood cells. Its numerous <strong>histidine residues</strong> bind free H⁺ as oxygen is unloaded, preventing drastic drops in blood pH."
+      },
+      {
+        q: "Which of the following acts as an inward force in pulmonary fluid dynamics?",
+        options: [
+          { letter: "A", text: "Plasma hydrostatic pressure" },
+          { letter: "B", text: "Plasma oncotic pressure" },
+          { letter: "C", text: "Interstitial fluid oncotic pressure" },
+          { letter: "D", text: "Interstitial fluid hydrostatic pressure" },
+          { letter: "E", text: "B and D" }
+        ],
+        correct: "E",
+        explanation: "In capillary fluid exchange, <strong>plasma oncotic pressure</strong> (pulling fluid back into vessels via blood proteins) is a powerful inward force. If <strong>interstitial fluid hydrostatic pressure</strong> is positive, it also pushes fluid back into the capillary — another inward force. So B and D are both correct."
+      },
+      {
+        q: "Which one is true about V̇A/Q̇?",
+        options: [
+          { letter: "A", text: "Apical region of the lung is more perfused" },
+          { letter: "B", text: "There is possible matching of V̇A and Q̇ in the lungs" },
+          { letter: "C", text: "V̇A/Q̇ is smaller in the basal region of the lungs" },
+          { letter: "D", text: "V̇A/Q̇ is larger in the basal region of the lungs" },
+          { letter: "E", text: "Whenever V̇A/Q̇ is below normal, there is inadequate perfusion" }
+        ],
+        correct: "C",
+        explanation: "Gravity causes both ventilation and perfusion to increase toward the base, but <strong>perfusion increases far more rapidly</strong> than ventilation. Therefore, V̇A/Q̇ is <strong>lower at the base</strong> (~0.6) and higher at the apex (~3.0)."
+      },
+      {
+        q: "Decrease in pCO₂, decrease in H⁺, and increased PO₂ causes:",
+        options: [
+          { letter: "A", text: "Hyperventilation" },
+          { letter: "B", text: "Hypoventilation" },
+          { letter: "C", text: "Hypercapnea" },
+          { letter: "D", text: "Hypoxia" },
+          { letter: "E", text: "Nothing happens" }
+        ],
+        correct: "B",
+        explanation: "The primary chemical drive to breathe is rising PCO₂ and rising H⁺, plus falling PO₂. When PCO₂ drops, pH rises (fewer H⁺), and PO₂ is high, chemical stimulation to the respiratory centers is minimized → <strong>hypoventilation</strong>."
+      },
+      {
+        q: "Which of the following does NOT shift the Hb-O₂ dissociation curve to the right/down?",
+        options: [
+          { letter: "A", text: "An increase in PCO₂" },
+          { letter: "B", text: "An increase in temperature" },
+          { letter: "C", text: "An increase in the concentration of H⁺" },
+          { letter: "D", text: "An increase in 2,3-diphosphoglycerate" },
+          { letter: "E", text: "An increase in pH" }
+        ],
+        correct: "E",
+        explanation: "An <strong>increase in pH</strong> means decreased H⁺ (alkalosis). This <strong>increases</strong> hemoglobin's affinity for oxygen and shifts the curve to the <strong>left</strong>, favoring oxygen binding rather than unloading. All other options shift the curve right."
+      },
+      {
+        q: "Which is NOT true of COHb?",
+        options: [
+          { letter: "A", text: "CO interferes with O₂ transport" },
+          { letter: "B", text: "CO affects PO₂" },
+          { letter: "C", text: "CO is undetectable" },
+          { letter: "D", text: "CO shifts Hb-O₂ dissociation curve to the left" },
+          { letter: "E", text: "CO has no physical signs of hypoxemia" }
+        ],
+        correct: "B",
+        explanation: "CO binds to the iron centers of hemoglobin, but the <strong>partial pressure of oxygen (PO₂)</strong> measures only dissolved oxygen in plasma — which is <strong>unaffected</strong> by CO. So CO does <em>not</em> affect PO₂, making B false (and the correct answer)."
+      },
+      {
+        q: "The cranial nerves involved in the regulation of respiration are:",
+        options: [
+          { letter: "A", text: "Vagus and trigeminal" },
+          { letter: "B", text: "Vagus and glossopharyngeal" },
+          { letter: "C", text: "Vagus and facial" },
+          { letter: "D", text: "Glossopharyngeal and hypoglossal" },
+          { letter: "E", text: "Vagus and hypoglossal" }
+        ],
+        correct: "B",
+        explanation: "The <strong>glossopharyngeal nerve (CN IX)</strong> carries sensory afferents from the carotid bodies, and the <strong>vagus nerve (CN X)</strong> carries sensory afferents from the aortic bodies and lung stretch receptors to the medullary respiratory center."
+      },
+      {
+        q: "The major means by which CO₂ is transported is:",
+        options: [
+          { letter: "A", text: "Dissolved form" },
+          { letter: "B", text: "Carbaminohemoglobin" },
+          { letter: "C", text: "Bicarbonate" },
+          { letter: "D", text: "Free form" },
+          { letter: "E", text: "Bound with H⁺" }
+        ],
+        correct: "C",
+        explanation: "Approximately <strong>70% of CO₂</strong> is transported as <strong>bicarbonate ions (HCO₃⁻)</strong>, about 23% as carbaminohemoglobin, and about 7% dissolved in plasma."
+      },
+      {
+        q: "The apex of the upright human lung compared with the base has:",
+        options: [
+          { letter: "A", text: "A higher PCO₂" },
+          { letter: "B", text: "A higher ventilation" },
+          { letter: "C", text: "A lower pH in end-capillary blood" },
+          { letter: "D", text: "A higher blood flow" },
+          { letter: "E", text: "None of the above" }
+        ],
+        correct: "E",
+        explanation: "Due to gravity, the apex has <strong>lower</strong> blood flow, <strong>lower</strong> ventilation, <strong>lower</strong> PCO₂ (because V̇A/Q̇ is high), and a <strong>higher</strong> end-capillary pH. Since A–D are all incorrect descriptions of the apex, E is correct."
+      },
+      {
+        q: "An air-tight chest wall is important in that it:",
+        options: [
+          { letter: "A", text: "Increases lung compliance" },
+          { letter: "B", text: "Decreases the work of breathing" },
+          { letter: "C", text: "Creates negative pressure in the chest" },
+          { letter: "D", text: "Prevents lung collapse" },
+          { letter: "E", text: "Causes the lung to become \"dry\"" }
+        ],
+        correct: "D",
+        explanation: "An airtight thoracic cavity maintains subatmospheric (negative) <strong>intrapleural pressure</strong>, pulling outward on the lung tissue and opposing the lung's natural elastic inward recoil — <strong>preventing total collapse</strong>."
+      },
+      {
+        q: "Of the following, the respiratory function of the respiratory system is:",
+        options: [
+          { letter: "A", text: "Defense" },
+          { letter: "B", text: "Phonation" },
+          { letter: "C", text: "Gas conduction" },
+          { letter: "D", text: "Olfaction" },
+          { letter: "E", text: "Blood pressure regulation" }
+        ],
+        correct: "C",
+        explanation: "While defense, phonation, olfaction, and BP regulation are non-respiratory functions, <strong>gas conduction</strong> is the primary respiratory function — transporting fresh air to the gas-exchanging alveoli."
+      },
+      {
+        q: "The same amount of PO₂ taken up from the lungs reaches the cell. The reason is:",
+        options: [
+          { letter: "A", text: "RBCs lack nucleus" },
+          { letter: "B", text: "RBCs lack mitochondria" },
+          { letter: "C", text: "Krebs cycle occurs in the RBCs" },
+          { letter: "D", text: "RBCs lack Hb" },
+          { letter: "E", text: "None of the above" }
+        ],
+        correct: "B",
+        explanation: "Mature RBCs <strong>lack mitochondria</strong> and use anaerobic glycolysis only. Because they do not perform aerobic respiration, they do not consume any oxygen they transport — ensuring 100% of bound oxygen reaches systemic tissues."
+      },
+      {
+        q: "When respiratory drive for increased pulmonary ventilation becomes greater than normal, a special set of respiratory neurons inactive during quiet breathing becomes active. These neurons are located in:",
+        options: [
+          { letter: "A", text: "Apneustic center" },
+          { letter: "B", text: "Dorsal respiratory group" },
+          { letter: "C", text: "Nucleus of the tractus solitarius" },
+          { letter: "D", text: "Pneumotaxic center" },
+          { letter: "E", text: "Ventral respiratory group" }
+        ],
+        correct: "E",
+        explanation: "During quiet breathing, inspiration is driven by the DRG, and expiration is passive. When ventilation demand rises (e.g., exercise), the <strong>Ventral Respiratory Group (VRG)</strong> is recruited to actively drive both forced inspiration and forced expiration."
+      },
+      {
+        q: "Which one of the following is true about tidal volume?",
+        options: [
+          { letter: "A", text: "The amount of air that normally moves into (or out of) the lung with each respiration" },
+          { letter: "B", text: "The amount of air that enters the lung but does not participate in gas exchange" },
+          { letter: "C", text: "The largest amount of air expired after maximal expiratory effort" },
+          { letter: "D", text: "The largest amount of gas that can be moved into and out of the lungs in one minute" },
+          { letter: "E", text: "The volume of air one breathes in with exertion" }
+        ],
+        correct: "A",
+        explanation: "<strong>Tidal Volume (TV)</strong> is the volume of air inspired or expired with each single, normal, resting breath (~500 mL in adults)."
+      },
+      {
+        q: "O₂ delivery to the tissues would be reduced to the greatest extent in:",
+        options: [
+          { letter: "A", text: "A normal subject breathing 100% O₂ on top of Mt. Everest" },
+          { letter: "B", text: "A normal subject running a marathon at sea level" },
+          { letter: "C", text: "A patient with carbon monoxide poisoning" },
+          { letter: "D", text: "A patient who has ingested cyanide" },
+          { letter: "E", text: "A patient with moderately severe metabolic acidosis" }
+        ],
+        correct: "C",
+        explanation: "CO binds hemoglobin with an affinity ~250× greater than oxygen, occupying binding sites and shifting the remaining curve <strong>left</strong> (preventing oxygen unloading at tissues). Cyanide blocks cellular oxygen utilization, but <em>arterial oxygen delivery</em> (blood transport) remains high."
+      },
+      {
+        q: "Which hormone is secreted in excess when a person climbs a mountain?",
+        options: [
+          { letter: "A", text: "Anti Natriuretic Factor" },
+          { letter: "B", text: "Adrenaline" },
+          { letter: "C", text: "Erythropoietin" },
+          { letter: "D", text: "Thyroxine" },
+          { letter: "E", text: "Aldosterone" }
+        ],
+        correct: "C",
+        explanation: "Low atmospheric pressure at altitude reduces arterial PO₂, triggering systemic hypoxia. The <strong>kidneys</strong> detect this and secrete <strong>erythropoietin (EPO)</strong>, stimulating bone marrow to increase red blood cell production and expand oxygen-carrying capacity."
+      },
+      {
+        q: "Decreasing the surface area of the respiratory membrane would affect:",
+        options: [
+          { letter: "A", text: "Inhalation" },
+          { letter: "B", text: "Cellular respiration" },
+          { letter: "C", text: "External respiration" },
+          { letter: "D", text: "Mucus production" },
+          { letter: "E", text: "Internal respiration" }
+        ],
+        correct: "C",
+        explanation: "<strong>External respiration</strong> is gas exchange between alveolar air and pulmonary capillary blood. Fick's Law dictates that reducing the surface area of the respiratory membrane (as in emphysema) directly decreases the rate of this gas exchange."
+      },
+      {
+        q: "In the lungs, surfactant substance is produced by:",
+        options: [
+          { letter: "A", text: "Pneumocyte type I" },
+          { letter: "B", text: "Pneumocyte type II" },
+          { letter: "C", text: "Pneumocyte type III" },
+          { letter: "D", text: "Alveolar macrophages" },
+          { letter: "E", text: "White blood cell" }
+        ],
+        correct: "B",
+        explanation: "<strong>Type II alveolar epithelial cells (Type II pneumocytes)</strong> are specialized cuboidal cells responsible for synthesizing, storing, and secreting <strong>surfactant</strong>."
+      },
+      {
+        q: "The extent to which the lung expands is its:",
+        options: [
+          { letter: "A", text: "Resistance" },
+          { letter: "B", text: "Compliance" },
+          { letter: "C", text: "Viscosity" },
+          { letter: "D", text: "Recoiling ability" },
+          { letter: "E", text: "Dryness" }
+        ],
+        correct: "B",
+        explanation: "<strong>Lung compliance</strong> measures the expandability or stretchability of the lungs. It is calculated as change in lung volume ÷ change in transpulmonary pressure."
+      },
+      {
+        q: "If oxygen content is 14 mL O₂/dL blood and oxygen capacity is 20 mL O₂/dL blood, the saturation is:",
+        options: [
+          { letter: "A", text: "80%" },
+          { letter: "B", text: "60%" },
+          { letter: "C", text: "70%" },
+          { letter: "D", text: "65%" },
+          { letter: "E", text: "75%" }
+        ],
+        correct: "C",
+        explanation: "Oxygen saturation = Oxygen content ÷ Oxygen capacity × 100 = <strong>14 ÷ 20 × 100 = 70%</strong>."
+      }
+    ]
+  }
+
+
+    ,{
+    id: "physio-2015",
+    subject: "Physiology",
+    topic: "Respiratory",
+    year: 2015,
+    title: "Physiology 2015 E.C",
+    icon: "🧠",
+    section: "Respiratory Physiology",
+    questions: [
+      {
+        q: "In a person running a 10,000 m race, which muscles contract during expiration?",
+        options: [
+          { letter: "A", text: "Diaphragm and external intercostal muscles" },
+          { letter: "B", text: "Internal intercostal muscles and abdominal recti" },
+          { letter: "C", text: "Sternocleidomastoid muscles" },
+          { letter: "D", text: "Diaphragm and internal intercostal muscles" },
+          { letter: "E", text: "None of the above" }
+        ],
+        correct: "B",
+        explanation: "Quiet expiration is passive (elastic recoil). During heavy exercise (like a 10,000 m race), expiration becomes <strong>active (forced)</strong>, requiring contraction of expiratory muscles — primarily the <strong>abdominal muscles</strong> (rectus abdominis, obliques) and <strong>internal intercostals</strong>. The diaphragm and external intercostals are inspiratory muscles."
+      },
+      {
+        q: "The normal pleural pressure of an individual is approximately -5 cm H₂O during resting conditions immediately before inspiration. What is the pleural pressure (in cm H₂O) during inspiration?",
+        options: [
+          { letter: "A", text: "-1.5" },
+          { letter: "B", text: "+1" },
+          { letter: "C", text: "0" },
+          { letter: "D", text: "-7.5" },
+          { letter: "E", text: "None of the above" }
+        ],
+        correct: "D",
+        explanation: "Intrapleural pressure at the start of inspiration is about <strong>-5 cm H₂O</strong>. During inspiration, chest wall expansion increases thoracic volume, intensifying the suction force — intrapleural pressure becomes more negative, averaging about <strong>-7.5 cm H₂O</strong> at the end of normal quiet inspiration."
+      },
+      {
+        q: "Compliance of the lung:",
+        options: [
+          { letter: "A", text: "Is about 500 mL/cm H₂O" },
+          { letter: "B", text: "Is decreased in emphysematous changes" },
+          { letter: "C", text: "Is higher in small children than in adults" },
+          { letter: "D", text: "Is increased in preterm infants" },
+          { letter: "E", text: "None of the above" }
+        ],
+        correct: "E",
+        explanation: "Normal total lung compliance is about <strong>200 mL/cm H₂O</strong> (not 500). It is <strong>increased</strong> in emphysema (not decreased). It is <strong>lower</strong> in small children (smaller lung volumes). It is <strong>decreased</strong> in preterm infants (surfactant deficiency). So all options are wrong → E."
+      },
+      {
+        q: "Surfactant:",
+        options: [
+          { letter: "A", text: "Is formed by pulmonary capillary endothelial cells" },
+          { letter: "B", text: "Increases alveolar fluid surface tension" },
+          { letter: "C", text: "Can be deficient in premature infants" },
+          { letter: "D", text: "Is composed of protein only" },
+          { letter: "E", text: "None of the above" }
+        ],
+        correct: "C",
+        explanation: "Surfactant is a complex mixture of phospholipids (mainly DPPC/lecithin) and proteins, synthesized by <strong>Type II pneumocytes</strong> (not endothelial cells). It <strong>decreases</strong> alveolar surface tension. Premature infants can be deficient in it, causing <strong>Infant Respiratory Distress Syndrome (IRDS)</strong>."
+      },
+      {
+        q: "Which of the following lung volumes or capacities can be measured by direct spirometry?",
+        options: [
+          { letter: "A", text: "FRC" },
+          { letter: "B", text: "RV" },
+          { letter: "C", text: "TLC" },
+          { letter: "D", text: "VC" },
+          { letter: "E", text: "None of the above" }
+        ],
+        correct: "D",
+        explanation: "Spirometry measures only air that can be inspired or expired. <strong>Residual Volume (RV)</strong> cannot be measured — so any capacity containing RV (FRC, TLC) also cannot. <strong>Vital Capacity (VC)</strong> does not include RV, so it <em>can</em> be measured by spirometry."
+      },
+      {
+        q: "In an individual with VC = 5 L, VT = 0.5 L, IC = 3.5 L, and FRC = 2.5 L, what is his expiratory reserve volume (ERV)?",
+        options: [
+          { letter: "A", text: "2.0 L" },
+          { letter: "B", text: "1.5 L" },
+          { letter: "C", text: "1.0 L" },
+          { letter: "D", text: "2.5 L" },
+          { letter: "E", text: "None of the above" }
+        ],
+        correct: "B",
+        explanation: "VC = IC + ERV → ERV = VC − IC = <strong>5.0 − 3.5 = 1.5 L</strong>. The VT and FRC values are extra information."
+      },
+      {
+        q: "A capacity that remains in the lungs after a tidal volume (VT) is expired?",
+        options: [
+          { letter: "A", text: "FRC" },
+          { letter: "B", text: "VC" },
+          { letter: "C", text: "TLC" },
+          { letter: "D", text: "IC" },
+          { letter: "E", text: "None of the above" }
+        ],
+        correct: "A",
+        explanation: "<strong>Functional Residual Capacity (FRC)</strong> is the volume of air remaining in the lungs at the end of a normal tidal expiration. FRC = ERV + RV."
+      },
+      {
+        q: "A 59-year-old man has a pulmonary embolism that completely blocked blood flow to his left lung. As a result, which of the following will occur?",
+        options: [
+          { letter: "A", text: "Ventilation/perfusion (V̇A/Q̇) ratio in the left lung will be zero" },
+          { letter: "B", text: "Systemic arterial PO₂ will be elevated" },
+          { letter: "C", text: "Alveolar PO₂ in the left lung will be approximately equal to the PO₂ in inspired air" },
+          { letter: "D", text: "V̇A/Q̇ ratio in the left lung will be lower than in the right lung" },
+          { letter: "E", text: "None of the above" }
+        ],
+        correct: "C",
+        explanation: "Complete blockage means perfusion (Q̇) to the left lung is zero, while ventilation continues — so V̇A/Q̇ = <strong>infinity</strong> (physiological dead space). No gas exchange occurs, so alveolar gas equilibrates with humidified inspired air: left alveolar PO₂ ≈ <strong>149 mmHg</strong>."
+      },
+      {
+        q: "An increase in physiological dead space would be expected with:",
+        options: [
+          { letter: "A", text: "Pulmonary embolism that blocks pulmonary blood flow" },
+          { letter: "B", text: "Atelectasis or collapse of one lung" },
+          { letter: "C", text: "Bronchoconstriction" },
+          { letter: "D", text: "B and C" },
+          { letter: "E", text: "None of the above" }
+        ],
+        correct: "A",
+        explanation: "<strong>Physiological dead space</strong> = anatomical dead space + alveolar dead space (ventilated alveoli with no blood flow). A <strong>pulmonary embolism</strong> blocks perfusion, creating large alveolar dead space. Atelectasis is a <em>shunt</em>, not dead space."
+      },
+      {
+        q: "As we go from the top of the erect lung to the bottom:",
+        options: [
+          { letter: "A", text: "V̇A/Q̇ is higher at base than apex" },
+          { letter: "B", text: "Ventilation is higher at base than apex" },
+          { letter: "C", text: "Alveolar PCO₂ at apex is higher than at the base" },
+          { letter: "D", text: "Alveolar PO₂ at base is higher than at the apex" },
+          { letter: "E", text: "None of the above" }
+        ],
+        correct: "B",
+        explanation: "Both ventilation and perfusion increase from apex to base, but perfusion increases much more. So <strong>ventilation is higher at base</strong>. V̇A/Q̇ is higher at apex (~2.5) and lower at base (~0.6). Apex has higher alveolar PO₂ and lower PCO₂."
+      },
+      {
+        q: "Pulmonary circulation is:",
+        options: [
+          { letter: "A", text: "High-pressure circulation" },
+          { letter: "B", text: "High-flow circulation" },
+          { letter: "C", text: "Low-flow circulation" },
+          { letter: "D", text: "To supply systemic arterial blood to the trachea, bronchial tree, and supporting tissues of the lung" },
+          { letter: "E", text: "None of the above" }
+        ],
+        correct: "B",
+        explanation: "Pulmonary circulation is <strong>low-pressure, high-flow</strong> — it receives 100% of cardiac output under low pressure (~25/8 mmHg). The bronchial circulation is high-pressure, low-flow (~1–2% of cardiac output)."
+      },
+      {
+        q: "In which vascular bed does hypoxia cause vasoconstriction?",
+        options: [
+          { letter: "A", text: "Coronary" },
+          { letter: "B", text: "Pulmonary" },
+          { letter: "C", text: "Cerebral" },
+          { letter: "D", text: "Muscle" },
+          { letter: "E", text: "None of the above" }
+        ],
+        correct: "B",
+        explanation: "<strong>Hypoxic pulmonary vasoconstriction</strong> is a unique local reflex that increases vascular resistance in poorly ventilated regions, shunting blood to well-ventilated alveoli. All other systemic beds (coronary, cerebral, muscle) <strong>dilate</strong> in response to hypoxia."
+      },
+      {
+        q: "In an alveolus with a normal ventilation-perfusion ratio, blood at the end of the pulmonary capillary:",
+        options: [
+          { letter: "A", text: "Has a PO₂ similar to blood in the left ventricle" },
+          { letter: "B", text: "Has a PO₂ similar to that in the left atrium" },
+          { letter: "C", text: "Has a PO₂ higher than blood from the aorta" },
+          { letter: "D", text: "Has a percent saturation of 95%" },
+          { letter: "E", text: "None of the above" }
+        ],
+        correct: "C",
+        explanation: "End-capillary blood equilibrates with alveolar air (PO₂ ≈ 104 mmHg, SaO₂ ≈ 97%). But by the time it reaches the aorta, it mixes with deoxygenated shunt blood (bronchial and thebesian veins), lowering arterial PO₂ to ~95 mmHg. So end-capillary PO₂ is <strong>higher</strong> than aortic."
+      },
+      {
+        q: "The forces governing the diffusion of a gas through a respiratory membrane include pressure difference (ΔP), cross-sectional area (A), solubility (S), distance (d), and molecular weight (MW). Which changes increase the diffusion of a gas?",
+        options: [
+          { letter: "A", text: "Increase ΔP, Increase A, Increase S, Increase d, Increase MW" },
+          { letter: "B", text: "Increase ΔP, Increase A, Increase S, Increase d, Decrease MW" },
+          { letter: "C", text: "Increase ΔP, Decrease A, Increase S, Decrease d, Decrease MW" },
+          { letter: "D", text: "Increase ΔP, Increase A, Increase S, Decrease d, Decrease MW" },
+          { letter: "E", text: "None of the above" }
+        ],
+        correct: "D",
+        explanation: "Per Fick's Law: Diffusion ∝ (ΔP × A × S) / (d × √MW). To increase diffusion: <strong>increase</strong> ΔP, A, S; <strong>decrease</strong> d and MW. This matches option D."
+      },
+      {
+        q: "Which one is among factors that increase respiratory membrane thickness, thus impairing gas exchange?",
+        options: [
+          { letter: "A", text: "Removal of an entire lung" },
+          { letter: "B", text: "Emphysema" },
+          { letter: "C", text: "Edema fluid in the interstitial space of the membrane and in the alveoli" },
+          { letter: "D", text: "Atelectasis or collapse of one lung" },
+          { letter: "E", text: "None of the above" }
+        ],
+        correct: "C",
+        explanation: "Normal respiratory membrane thickness is ~0.6 µm. In <strong>pulmonary edema</strong>, fluid accumulates in the interstitium and alveoli, <strong>increasing the diffusion distance</strong>. Emphysema and lung removal reduce <em>surface area</em>, not thickness."
+      },
+      {
+        q: "Ninety-seven percent of oxygen is carried in the blood in the form of:",
+        options: [
+          { letter: "A", text: "Dissolved oxygen in blood plasma" },
+          { letter: "B", text: "Oxyhemoglobin" },
+          { letter: "C", text: "Carbaminohemoglobin" },
+          { letter: "D", text: "In the form of bicarbonate ion" },
+          { letter: "E", text: "None of the above" }
+        ],
+        correct: "B",
+        explanation: "Oxygen is transported in two forms: (1) dissolved in plasma (~3%, ~0.17 mL O₂/dL), and (2) <strong>bound to hemoglobin as oxyhemoglobin</strong> (~97%, ~5 mL O₂/dL at rest)."
+      },
+      {
+        q: "Oxygen dissociation curve shift to the right:",
+        options: [
+          { letter: "A", text: "Due to decrease in blood H⁺ concentration" },
+          { letter: "B", text: "Means the O₂ affinity of hemoglobin is reduced" },
+          { letter: "C", text: "Due to decrease in the concentration of 2,3-biphosphoglycerate in the red cells" },
+          { letter: "D", text: "Due to decrease in blood CO₂" },
+          { letter: "E", text: "None of the above" }
+        ],
+        correct: "B",
+        explanation: "A <strong>rightward shift</strong> means hemoglobin's affinity for oxygen is <strong>reduced</strong>, facilitating O₂ unloading to tissues. It is caused by <strong>increased</strong> H⁺ (acidosis), PCO₂, temperature, and 2,3-DPG."
+      },
+      {
+        q: "Which one is incorrect?",
+        options: [
+          { letter: "A", text: "Carbon monoxide molecules displace O₂ from the hemoglobin" },
+          { letter: "B", text: "Carbon monoxide has about 250 times the affinity of O₂ for hemoglobin" },
+          { letter: "C", text: "In CO poisoning the PO₂ of the blood may be normal" },
+          { letter: "D", text: "In CO poisoning increased respiration rate in response to lack of O₂ is usually absent" },
+          { letter: "E", text: "None of the above" }
+        ],
+        correct: "B",
+        explanation: "The affinity of hemoglobin for CO is about <strong>210 times</strong> (not 250) its affinity for O₂. Options A, C, and D are all true: CO displaces O₂, arterial PO₂ remains normal, and the hyperpneic response is absent (because peripheral chemoreceptors sense PO₂, not content)."
+      },
+      {
+        q: "Transport of carbon dioxide by blood is mainly in the form of:",
+        options: [
+          { letter: "A", text: "Bicarbonate ions" },
+          { letter: "B", text: "Carbaminohemoglobin" },
+          { letter: "C", text: "Dissolved carbon dioxide in blood plasma" },
+          { letter: "D", text: "Oxyhemoglobin" },
+          { letter: "E", text: "None of the above" }
+        ],
+        correct: "A",
+        explanation: "CO₂ is transported in three forms: dissolved in plasma (~7%), carbaminohemoglobin (~23%), and <strong>bicarbonate ions (HCO₃⁻)</strong> (~70%). <strong>Bicarbonate</strong> is the major transport mechanism."
+      },
+      {
+        q: "Haldane effect:",
+        options: [
+          { letter: "A", text: "Is a shift of the O₂-Hb dissociation curve to the right in response to increases in blood CO₂" },
+          { letter: "B", text: "Is a shift of the O₂-Hb dissociation curve to the right in response to increases in blood hydrogen ions" },
+          { letter: "C", text: "Has a significant effect by enhancing the release of O₂ from the blood in the tissues" },
+          { letter: "D", text: "Is the effect of binding of O₂ with hemoglobin that tends to displace CO₂ from the blood" },
+          { letter: "E", text: "None of the above" }
+        ],
+        correct: "D",
+        explanation: "The <strong>Haldane effect</strong> states that <strong>oxygenation of hemoglobin decreases its affinity for CO₂ and H⁺</strong>, displacing CO₂ into the alveoli for expiration. Options A and B describe the <strong>Bohr effect</strong>."
+      },
+      {
+        q: "Inspiration is initiated by discharge from:",
+        options: [
+          { letter: "A", text: "The dorsal inspiratory group of neurons" },
+          { letter: "B", text: "The ventral group of neurons" },
+          { letter: "C", text: "Pneumotaxic center" },
+          { letter: "D", text: "A respiratory center in pons" },
+          { letter: "E", text: "None of the above" }
+        ],
+        correct: "A",
+        explanation: "The <strong>Dorsal Respiratory Group (DRG)</strong>, located in the nucleus of the tractus solitarius (NTS) in the medulla, controls the basic rhythm of breathing. Its I-neurons fire in a ramp-like pattern (~2 sec), stimulating the diaphragm, then stop (~3 sec) for passive expiration."
+      },
+      {
+        q: "The exchange of respiratory gases (O₂ and CO₂) between alveoli and pulmonary capillaries is:",
+        options: [
+          { letter: "A", text: "Internal respiration" },
+          { letter: "B", text: "Cellular respiration" },
+          { letter: "C", text: "External respiration" },
+          { letter: "D", text: "Pulmonary ventilation" },
+          { letter: "E", text: "Breathing" }
+        ],
+        correct: "C",
+        explanation: "<strong>External respiration</strong> is gas exchange across the respiratory membrane between alveolar air and pulmonary capillary blood. Internal respiration occurs at the tissue level; pulmonary ventilation is mechanical air movement."
+      },
+      {
+        q: "At the end of both inspiration and expiration, the intrapleural pressure is:",
+        options: [
+          { letter: "A", text: "Greater than atmospheric pressure" },
+          { letter: "B", text: "Equal to atmospheric pressure" },
+          { letter: "C", text: "Equal to alveolar pressure" },
+          { letter: "D", text: "Greater than alveolar pressure" },
+          { letter: "E", text: "None of the above" }
+        ],
+        correct: "E",
+        explanation: "At both static endpoints, alveolar pressure = atmospheric (0 cm H₂O). Intrapleural pressure remains <strong>negative</strong> throughout (~-7.5 cm H₂O at end-inspiration, ~-5 cm H₂O at end-expiration), always lower than atmospheric and alveolar pressure. So E is correct."
+      },
+      {
+        q: "The rate of diffusion of a gas across the respiratory membrane decreases as the:",
+        options: [
+          { letter: "A", text: "Respiratory membrane becomes thicker" },
+          { letter: "B", text: "Surface area of the respiratory membrane decreases" },
+          { letter: "C", text: "Molecular weight of the gas increases" },
+          { letter: "D", text: "Diffusion coefficient of the gas decreases" },
+          { letter: "E", text: "All are answers" }
+        ],
+        correct: "E",
+        explanation: "Per Fick's Law, diffusion rate decreases when membrane thickness increases (A), surface area decreases (B), molecular weight increases (C), or diffusion coefficient decreases (D). So <strong>all</strong> are correct."
+      },
+      {
+        q: "During quiet breathing, around 70% of the pulmonary ventilation is mainly by which muscle's contraction?",
+        options: [
+          { letter: "A", text: "External intercostals" },
+          { letter: "B", text: "Diaphragm and internal intercostals" },
+          { letter: "C", text: "Diaphragm and external intercostals" },
+          { letter: "D", text: "Internal intercostals and abdominal recti" },
+          { letter: "E", text: "Diaphragm" }
+        ],
+        correct: "E",
+        explanation: "Quiet resting breathing is driven almost entirely by the rhythmic contraction of the <strong>diaphragm</strong> (~70% of tidal volume). External intercostals assist, but the diaphragm is the major contributor."
+      },
+      {
+        q: "During inspiration, the intrapulmonary pressure:",
+        options: [
+          { letter: "A", text: "Less than the pleural pressure by 1 mm Hg" },
+          { letter: "B", text: "Greater than the atmospheric pressure by 3 mm Hg" },
+          { letter: "C", text: "Less than the atmospheric pressure by 6 mm Hg" },
+          { letter: "D", text: "Greater than the pleural pressure by 4 mm Hg" },
+          { letter: "E", text: "Less than the pleural pressure by 3 mm Hg" }
+        ],
+        correct: "D",
+        explanation: "During inspiration, intrapulmonary (alveolar) pressure drops to about -1 cm H₂O, and pleural pressure drops to about -7.5 cm H₂O. Transpulmonary pressure = Palv − Ppl = -1 − (-7.5) = <strong>+6.5 cm H₂O</strong> (~4 mm Hg). So intrapulmonary pressure exceeds pleural pressure by ~4 mm Hg."
+      },
+      {
+        q: "When blood passes through the pulmonary capillaries, the hemoglobin increases the release of carbon dioxide because of:",
+        options: [
+          { letter: "A", text: "Bohr effect" },
+          { letter: "B", text: "Haldane effect" },
+          { letter: "C", text: "Chloride shift" },
+          { letter: "D", text: "Boyle's effect" },
+          { letter: "E", text: "Dalton effect" }
+        ],
+        correct: "B",
+        explanation: "As venous blood passes through pulmonary capillaries, oxygen binding to hemoglobin causes it to become a stronger acid, releasing H⁺ (which drives bicarbonate back to CO₂) and reducing its affinity for CO₂ bound to amine groups. This is the <strong>Haldane effect</strong>."
+      },
+      {
+        q: "Partial pressure of carbon dioxide in the:",
+        options: [
+          { letter: "A", text: "Arterial end of tissue capillaries is greater than in the interstitial fluid" },
+          { letter: "B", text: "Intracellular is less than in the interstitial fluid" },
+          { letter: "C", text: "Venous end of pulmonary capillaries is less than in the alveoli" },
+          { letter: "D", text: "Alveoli is greater than in the arterial end of pulmonary capillaries" },
+          { letter: "E", text: "Venous ends of tissue capillaries is equal to in the interstitial fluid" }
+        ],
+        correct: "E",
+        explanation: "As blood flows through tissue capillaries, CO₂ diffuses down its gradient from intracellular (>46 mmHg) → interstitial fluid (45 mmHg) → capillary blood (40 mmHg at arterial end). By the <strong>venous end</strong>, equilibrium is reached, so venous PCO₂ = interstitial fluid PCO₂ (~45 mmHg)."
+      },
+      {
+        q: "Which respiratory group \"switches off\" inspiratory signals, thus controlling the duration of the filling phase of the lung cycle?",
+        options: [
+          { letter: "A", text: "Apneustic center" },
+          { letter: "B", text: "Dorsal respiratory group" },
+          { letter: "C", text: "Nucleus of the tractus solitarius" },
+          { letter: "D", text: "Pneumotaxic center" },
+          { letter: "E", text: "Ventral respiratory group" }
+        ],
+        correct: "D",
+        explanation: "The <strong>pneumotaxic center</strong>, located in the nucleus parabrachialis of the upper pons, sends inhibitory signals to the DRG to \"switch off\" the inspiratory ramp. Strong signaling → shorter inspiration → faster breathing rate."
+      },
+      {
+        q: "Which of the following best describes the effect of the Hering-Breuer reflex?",
+        options: [
+          { letter: "A", text: "Inhibit the respiratory center neurons and cause expiration" },
+          { letter: "B", text: "Regulating the basic rhythm of breathing for infants" },
+          { letter: "C", text: "Limits the duration of inspiration and prevents over inflation of the lungs" },
+          { letter: "D", text: "Important only when the tidal volume is large during heavy exercise" },
+          { letter: "E", text: "All are answers" }
+        ],
+        correct: "E",
+        explanation: "The <strong>Hering-Breuer reflex</strong> is triggered by lung stretch receptors (>1.5 L tidal volume) via the vagus nerve. It (A) inhibits the respiratory center, (C) limits inspiration to prevent over-inflation, and (B) regulates respiratory rhythm in infants. <strong>All are correct.</strong>"
+      },
+      {
+        q: "The effect of pH on the oxygen–hemoglobin dissociation curve is described by:",
+        options: [
+          { letter: "A", text: "Bohr effect" },
+          { letter: "B", text: "Haldane effect" },
+          { letter: "C", text: "Chloride shift" },
+          { letter: "D", text: "Boyle's effect" },
+          { letter: "E", text: "Dalton effect" }
+        ],
+        correct: "A",
+        explanation: "The <strong>Bohr effect</strong> describes how increased H⁺ (decreased pH) and CO₂ reduce hemoglobin's affinity for oxygen, shifting the curve rightward and enhancing O₂ unloading in tissues."
+      },
+      {
+        q: "Which of the following correctly describes the oxygen–hemoglobin dissociation curve?",
+        options: [
+          { letter: "A", text: "Shifts to the right in the pulmonary capillaries and to the left in the tissue capillaries" },
+          { letter: "B", text: "Shifts to the left in the pulmonary capillaries and to the right in the tissue capillaries" },
+          { letter: "C", text: "An increase in pH, decrease in CO₂, and decrease in temperature increase the ability of hemoglobin to release O₂" },
+          { letter: "D", text: "A decrease in pH, increase in CO₂, and increase in temperature decrease the ability of hemoglobin to release O₂" },
+          { letter: "E", text: "All are answers" }
+        ],
+        correct: "B",
+        explanation: "In <strong>pulmonary capillaries</strong>: CO₂ is expired, pH rises → curve shifts <strong>left</strong>, maximizing O₂ loading. In <strong>tissue capillaries</strong>: CO₂ and acids are produced, pH falls → curve shifts <strong>right</strong>, facilitating O₂ unloading."
+      },
+      {
+        q: "Which of the following is correct during gas exchange in the tissues at a time when hydrogen ions bind to hemoglobin?",
+        options: [
+          { letter: "A", text: "Ability of hemoglobin to release oxygen is increased" },
+          { letter: "B", text: "Transport of carbon dioxide increases" },
+          { letter: "C", text: "pH inside the red blood cells does not decrease" },
+          { letter: "D", text: "Affinity of hemoglobin for oxygen decreases" },
+          { letter: "E", text: "All are answers" }
+        ],
+        correct: "E",
+        explanation: "In tissue capillaries, CO₂ is hydrated to H⁺ and HCO₃⁻. H⁺ binds hemoglobin, which (C) buffers the RBC pH, (D) decreases O₂ affinity, (A) increases O₂ release to tissues, and (B) enhances carbaminohemoglobin formation. <strong>All are correct.</strong>"
+      },
+      {
+        q: "The volume of air that is actually used for exchange between the atmosphere and the alveoli is:",
+        options: [
+          { letter: "A", text: "1100 mL" },
+          { letter: "B", text: "150 mL" },
+          { letter: "C", text: "500 mL" },
+          { letter: "D", text: "350 mL" },
+          { letter: "E", text: "1200 mL" }
+        ],
+        correct: "D",
+        explanation: "Tidal volume (VT) = 500 mL, anatomical dead space (VD) = 150 mL. Alveolar ventilation per breath = VT − VD = 500 − 150 = <strong>350 mL</strong>."
+      },
+      {
+        q: "During pregnancy, pulmonary ventilation mainly occurs due to the contraction of:",
+        options: [
+          { letter: "A", text: "External intercostals" },
+          { letter: "B", text: "Diaphragm and internal intercostals" },
+          { letter: "C", text: "Diaphragm and external intercostals" },
+          { letter: "D", text: "Internal intercostals and abdominal recti" },
+          { letter: "E", text: "Diaphragm" }
+        ],
+        correct: "A",
+        explanation: "During pregnancy, the gravid uterus pushes abdominal contents and the diaphragm upward, restricting diaphragmatic excursion. To maintain tidal volume, the mother relies more heavily on thoracic expansion via the <strong>external intercostals</strong>."
+      },
+      {
+        q: "The volume of air exchanged between the atmosphere and alveoli per minute is:",
+        options: [
+          { letter: "A", text: "Minute Ventilation" },
+          { letter: "B", text: "Respiratory rate" },
+          { letter: "C", text: "Pulmonary Ventilation" },
+          { letter: "D", text: "Alveolar Ventilation" },
+          { letter: "E", text: "Tidal volume" }
+        ],
+        correct: "D",
+        explanation: "<strong>Alveolar ventilation per minute</strong> (V̇A) is the volume of fresh air reaching the respiratory zone each minute. V̇A = Freq × (VT − VD). Pulmonary/minute ventilation (V̇E) = Freq × VT (includes dead space air)."
+      },
+      {
+        q: "Common partial pressure of oxygen in the interstitial fluid of peripheral tissues is:",
+        options: [
+          { letter: "A", text: "95 mm Hg" },
+          { letter: "B", text: "20 mm Hg" },
+          { letter: "C", text: "45 mm Hg" },
+          { letter: "D", text: "104 mm Hg" },
+          { letter: "E", text: "None of the above" }
+        ],
+        correct: "E",
+        explanation: "Normal interstitial fluid PO₂ at rest is about <strong>40 mmHg</strong> (intracellular: 5–23 mmHg). Since 40 mmHg is not listed, the correct answer is <strong>E. None of the above</strong>."
+      },
+      {
+        q: "Neurons in the brain stem primarily promoting the contraction of the diaphragm and external intercostal muscles during inspiration are:",
+        options: [
+          { letter: "A", text: "Apneustic center" },
+          { letter: "B", text: "Dorsal respiratory group" },
+          { letter: "C", text: "Nucleus of the nucleus ambiguus" },
+          { letter: "D", text: "Pneumotaxic center" },
+          { letter: "E", text: "Ventral respiratory group" }
+        ],
+        correct: "B",
+        explanation: "The <strong>Dorsal Respiratory Group (DRG)</strong> in the NTS of the medulla sends rhythmic inspiratory ramp signals via the phrenic and intercostal nerves to the diaphragm and external intercostals."
+      },
+      {
+        q: "Which of the following is true about the chloride shift?",
+        options: [
+          { letter: "A", text: "Promotes the transport of oxygen in the blood" },
+          { letter: "B", text: "Facilitates HCO₃⁻ diffuse into, and Cl⁻ diffuse out of, red blood cells during gas exchange in tissues" },
+          { letter: "C", text: "Maintains electrical neutrality in red blood cells and the plasma" },
+          { letter: "D", text: "Symporters of Cl⁻ and HCO₃⁻" },
+          { letter: "E", text: "All of the above" }
+        ],
+        correct: "C",
+        explanation: "The <strong>chloride shift</strong> maintains electrical neutrality: as HCO₃⁻ diffuses <em>out</em> of RBCs into plasma, Cl⁻ diffuses <em>in</em>. This is mediated by an <strong>antiporter</strong> (not symporter). It is essential for CO₂ transport, not O₂."
+      },
+      {
+        q: "The amount of air occupying the anatomical dead space is:",
+        options: [
+          { letter: "A", text: "100 mL" },
+          { letter: "B", text: "150 mL" },
+          { letter: "C", text: "500 mL" },
+          { letter: "D", text: "350 mL" },
+          { letter: "E", text: "1200 mL" }
+        ],
+        correct: "B",
+        explanation: "In a healthy adult, <strong>anatomical dead space</strong> — the volume of the conducting airways (nose, pharynx, trachea, bronchi) — is approximately <strong>150 mL</strong> (~2 mL/kg body weight)."
+      }
+    ]
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+       ,{
+    id: "biochem-2015",
+    subject: "Biochemistry",
+    topic: "Hemoglobin",
+    year: 2015,
+    title: "Biochemistry 2015 E.C",
+    icon: "🧬",
+    section: "Hemoglobin & Respiratory Function",
+    questions: [
+      {
+        q: "The conformational changes from the T (tense) to the R (relaxed) state are initiated by:",
+        options: [
+          { letter: "A", text: "Movement of the proximal histidine towards the heme" },
+          { letter: "B", text: "Movement of the F-helix, which contains the proximal His" },
+          { letter: "C", text: "Reorganization of protein-protein contacts between the heme" },
+          { letter: "D", text: "Binding of oxygen to the heme" }
+        ],
+        correct: "D",
+        explanation: "Hemoglobin exists in two conformations: the <strong>T (tense)</strong> state, which has a low affinity for oxygen, and the <strong>R (relaxed)</strong> state, which has a high affinity. The transition is <strong>initiated when oxygen binds to the iron (Fe²⁺) of the heme group</strong>. This binding triggers structural changes that increase oxygen affinity of the remaining subunits — <strong>cooperative binding</strong>."
+      },
+      {
+        q: "In sickle cell anemia, the defect lies in which polypeptide?",
+        options: [
+          { letter: "A", text: "Alpha chain" },
+          { letter: "B", text: "Beta chain" },
+          { letter: "C", text: "Gamma chain" },
+          { letter: "D", text: "Delta chain" }
+        ],
+        correct: "B",
+        explanation: "Sickle cell anemia is an autosomal recessive hemoglobinopathy caused by a point mutation in the <strong>β-globin (beta) chain</strong>. Glutamic acid is replaced by valine at the <strong>6th position</strong> of the β-globin chain, producing <strong>hemoglobin S (HbS)</strong>. Under low oxygen tension, HbS polymerizes, causing sickling, hemolysis, and vaso-occlusion."
+      },
+      {
+        q: "In hemoglobin, the innate affinity of heme for carbon monoxide is diminished by the presence of:",
+        options: [
+          { letter: "A", text: "His E7" },
+          { letter: "B", text: "His F9" },
+          { letter: "C", text: "Gly B6" },
+          { letter: "D", text: "Thr C4" }
+        ],
+        correct: "A",
+        explanation: "The <strong>distal histidine (His E7)</strong> reduces the naturally high affinity of heme for carbon monoxide (CO). It creates steric hindrance, preventing CO from binding in its preferred linear orientation. This favors oxygen binding and reduces CO affinity from ~25,000-fold to ~200–250-fold greater than oxygen."
+      },
+      {
+        q: "The walls of the alveoli are composed of two types of cells, type I and type II. The function of type II is to:",
+        options: [
+          { letter: "A", text: "Secrete surfactant" },
+          { letter: "B", text: "Trap dust and other debris" },
+          { letter: "C", text: "Replace mucus in the alveoli" },
+          { letter: "D", text: "Protect the lungs from bacterial invasion" }
+        ],
+        correct: "A",
+        explanation: "<strong>Type II alveolar cells (type II pneumocytes)</strong> are cuboidal epithelial cells that secrete <strong>pulmonary surfactant</strong>, a phospholipid-rich substance that reduces surface tension within the alveoli. This prevents alveolar collapse (atelectasis), improves lung compliance, and reduces the work of breathing. Type II pneumocytes also serve as progenitor cells after injury."
+      },
+      {
+        q: "Carbon monoxide poisoning decreases O₂ delivery and causes tissue hypoxia and may lead to death in untreated individuals by:",
+        options: [
+          { letter: "A", text: "Competitively binds to the O₂-binding site of hemoglobin at lower affinity" },
+          { letter: "B", text: "Reducing the ability of the hemoglobin molecule to release oxygen bound to other O₂-binding sites" },
+          { letter: "C", text: "Competitively interferes with the binding of 2,3-BPG to hemoglobin" },
+          { letter: "D", text: "All of the above" }
+        ],
+        correct: "B",
+        explanation: "Carbon monoxide (CO) binds to the heme iron (Fe²⁺) with an affinity <strong>200–250 times greater than oxygen</strong>. When CO binds, it increases the affinity of the remaining heme sites for oxygen, shifting the oxygen-hemoglobin dissociation curve to the <strong>left</strong>. Hemoglobin holds onto oxygen more tightly, <strong>reducing oxygen release to tissues</strong> — causing tissue hypoxia."
+      }
+    ]
+  }
+];
+
+
+/* ============ STATE ============ */
+const STORAGE_KEY = "alif_med_progress_v1";
+const state = {
+  view: "home",
+  activeTab: "modules",
+  search: "",
+  exam: null,
+  qIndex: 0,
+  showExplanation: false,
+  progress: loadProgress()
+};
+
+function loadProgress() {
+  try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}; }
+  catch { return {}; }
+}
+function saveProgress() {
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state.progress)); } catch {}
+}
+
+function getExamProgress(exam) {
+  const p = state.progress[exam.id] || {};
+  const answered = Object.keys(p).length;
+  const correct = Object.values(p).filter(v => v.correct).length;
+  return { answered, correct, total: exam.questions.length };
+}
+
+function escapeHtml(s) {
+  return String(s).replace(/[&<>"']/g, c => ({
+    "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+  }[c]));
+}
+
+function showToast(msg) {
+  const t = document.getElementById("toast");
+  t.textContent = msg;
+  t.classList.add("show");
+  clearTimeout(showToast._t);
+  showToast._t = setTimeout(() => t.classList.remove("show"), 1800);
+}
+
+/* ============ RENDER ============ */
+const app = document.getElementById("app");
+
+function render() {
+  if (state.view === "home") renderHome();
+  else renderQuiz();
+}
+
+function renderHome() {
+  const filtered = QUIZ_DATA.filter(exam => {
+    const q = state.search.toLowerCase();
+    if (!q) return true;
+    return exam.title.toLowerCase().includes(q)
+      || exam.subject.toLowerCase().includes(q)
+      || exam.topic.toLowerCase().includes(q)
+      || String(exam.year).includes(q);
+  });
+
+  const cardsHTML = filtered.length === 0
+    ? `<div class="empty-state">No exams match "${escapeHtml(state.search)}"</div>`
+    : filtered.map(exam => {
+        const p = getExamProgress(exam);
+        const pct = p.total ? Math.round((p.answered / p.total) * 100) : 0;
+        return `
+          <button class="exam-card" data-exam-id="${exam.id}">
+            <div class="exam-thumb">${exam.icon || "📘"}</div>
+            <div class="exam-body">
+              <div class="exam-tags">
+                <span class="tag subject">${escapeHtml(exam.subject)}</span>
+                <span class="tag topic">${escapeHtml(exam.topic)}</span>
+              </div>
+              <div class="exam-title">${escapeHtml(exam.title)}</div>
+              <div class="exam-meta">
+                ${p.answered > 0
+                  ? `${p.answered} / ${p.total} answered · ${p.correct} correct`
+                  : `${p.total} questions`}
+              </div>
+              ${p.answered > 0 ? `<div class="progress-bar"><div class="progress-fill" style="width:${pct}%"></div></div>` : ""}
+            </div>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:var(--text-dim);flex-shrink:0;"><path d="M9 18l6-6-6-6"/></svg>
+          </button>
+        `;
+      }).join("");
+
+  app.innerHTML = `
+    <header class="topbar">
+      <div class="logo-wrap">
+        <div class="logo-badge">AM</div>
+        <div class="logo-text">Alif Med</div>
+      </div>
+      <div class="avatar">MD</div>
+    </header>
+
+    <div class="search-wrap">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.35-4.35"/></svg>
+      <input id="searchInput" type="text" placeholder="Search quizzes or subjects..." value="${escapeHtml(state.search)}" />
+    </div>
+
+    <div class="tabs">
+      <button class="tab ${state.activeTab === "modules" ? "active" : ""}" data-tab="modules">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+        Modules
+      </button>
+      <button class="tab ${state.activeTab === "subjects" ? "active" : ""}" data-tab="subjects">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+        Subjects
+      </button>
+    </div>
+
+    <div class="list">${cardsHTML}</div>
+
+    <nav class="bottom-nav">
+      <div class="nav-item active">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 01-1 1h-5v-6H9v6H4a1 1 0 01-1-1V9.5z"/></svg>
+        Home
+      </div>
+      <div class="nav-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v4H4zM4 10h16v4H4zM4 16h16v4H4z"/></svg>
+        Exams
+      </div>
+      <div class="nav-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a8 8 0 01-11.5 7.2L3 21l1.8-6.5A8 8 0 1121 12z"/></svg>
+        Chat
+      </div>
+      <div class="nav-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>
+        Progress
+      </div>
+    </nav>
+  `;
+
+  // events
+  const searchInput = document.getElementById("searchInput");
+  searchInput.addEventListener("input", e => {
+    state.search = e.target.value;
+    const filtered2 = QUIZ_DATA.filter(exam => {
+      const q = state.search.toLowerCase();
+      if (!q) return true;
+      return exam.title.toLowerCase().includes(q)
+        || exam.subject.toLowerCase().includes(q)
+        || exam.topic.toLowerCase().includes(q)
+        || String(exam.year).includes(q);
+    });
+    const list = document.querySelector(".list");
+    list.innerHTML = filtered2.length === 0
+      ? `<div class="empty-state">No exams match "${escapeHtml(state.search)}"</div>`
+      : filtered2.map(exam => {
+          const p = getExamProgress(exam);
+          const pct = p.total ? Math.round((p.answered / p.total) * 100) : 0;
+          return `
+            <button class="exam-card" data-exam-id="${exam.id}">
+              <div class="exam-thumb">${exam.icon || "📘"}</div>
+              <div class="exam-body">
+                <div class="exam-tags">
+                  <span class="tag subject">${escapeHtml(exam.subject)}</span>
+                  <span class="tag topic">${escapeHtml(exam.topic)}</span>
+                </div>
+                <div class="exam-title">${escapeHtml(exam.title)}</div>
+                <div class="exam-meta">
+                  ${p.answered > 0
+                    ? `${p.answered} / ${p.total} answered · ${p.correct} correct`
+                    : `${p.total} questions`}
+                </div>
+                ${p.answered > 0 ? `<div class="progress-bar"><div class="progress-fill" style="width:${pct}%"></div></div>` : ""}
+              </div>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:var(--text-dim);flex-shrink:0;"><path d="M9 18l6-6-6-6"/></svg>
+            </button>
+          `;
+        }).join("");
+    attachExamCardHandlers();
+  });
+
+  document.querySelectorAll(".tab").forEach(tab => {
+    tab.addEventListener("click", () => {
+      state.activeTab = tab.dataset.tab;
+      renderHome();
+    });
+  });
+
+  attachExamCardHandlers();
+}
+
+function attachExamCardHandlers() {
+  document.querySelectorAll(".exam-card").forEach(card => {
+    card.addEventListener("click", () => {
+      const exam = QUIZ_DATA.find(e => e.id === card.dataset.examId);
+      if (!exam) return;
+      state.exam = exam;
+      state.qIndex = 0;
+      state.showExplanation = false;
+      state.view = "quiz";
+      render();
+      window.scrollTo(0, 0);
+    });
+  });
+}
+
+function renderQuiz() {
+  const exam = state.exam;
+  const q = exam.questions[state.qIndex];
+  const progress = state.progress[exam.id] || {};
+  const savedAnswer = progress[state.qIndex];
+  const answered = !!savedAnswer;
+  const isCorrect = answered && savedAnswer.correct;
+
+  const optionsHTML = q.options.map(opt => {
+    let cls = "option";
+    if (answered) {
+      cls += " locked";
+      if (opt.letter === q.correct) cls += " correct";
+      else if (opt.letter === savedAnswer.chosen) cls += " wrong";
+    }
+    return `
+      <button class="${cls}" data-letter="${opt.letter}">
+        <span class="letter">${opt.letter}</span>
+        <span>${escapeHtml(opt.text)}</span>
+      </button>
+    `;
+  }).join("");
+
+  const qNavHTML = exam.questions.map((_, i) => {
+    const p = progress[i];
+    let cls = "q-nav-btn";
+    if (i === state.qIndex) cls += " current";
+    else if (p) cls += p.correct ? " answered-correct" : " answered-wrong";
+    return `<button class="${cls}" data-qnav="${i}">${i + 1}</button>`;
+  }).join("");
+
+  const relatedHTML = q.related && q.related.length
+    ? `<div class="related">Related ${q.related.map(r => `<button class="related-btn">${escapeHtml(r)}</button>`).join("")}</div>`
+    : "";
+
+  app.innerHTML = `
+    <div class="quiz-header">
+      <button class="icon-btn" id="backBtn">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+      </button>
+      <div class="quiz-header-info">
+        <div class="quiz-header-title">${escapeHtml(exam.title)}</div>
+        <div class="quiz-header-count">${state.qIndex + 1} / ${exam.questions.length}</div>
+      </div>
+      <button class="icon-btn" id="closeBtn">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+      </button>
+    </div>
+
+    <div class="quiz-body">
+      <div class="breadcrumb">${escapeHtml(exam.subject.toUpperCase())} <span class="dot">·</span> PASTYEAR QUIZ</div>
+      <div class="quiz-title">${escapeHtml(exam.title)}</div>
+      <div class="quiz-section">${escapeHtml(exam.section || "")}</div>
+
+      <div class="q-tag-row">
+        <div>
+          <span class="q-number">Q${state.qIndex + 1}</span>
+          <span class="q-topic">${escapeHtml(exam.topic)}</span>
+        </div>
+      </div>
+
+      <div class="q-text">${escapeHtml(q.q)}</div>
+      <div class="options">${optionsHTML}</div>
+
+      ${answered ? `
+        <div class="result-row ${isCorrect ? "correct" : "wrong"}">
+          ${isCorrect ? "✓ Correct" : "✗ Incorrect"}
+        </div>
+        <div class="action-btns">
+          <button class="action-btn ${state.showExplanation ? "active" : ""}" id="explBtn">Explanation</button>
+        </div>
+        ${state.showExplanation ? `
+          <div class="explanation">
+            <div class="explanation-label">Explanation</div>
+            <div class="explanation-text">${q.explanation || "No explanation provided."}</div>
+          </div>
+        ` : ""}
+        ${relatedHTML}
+      ` : ""}
+
+      <div class="q-nav">${qNavHTML}</div>
+
+      <div class="nav-buttons">
+        <button class="nav-btn" id="prevBtn" ${state.qIndex === 0 ? "disabled" : ""}>← Previous</button>
+        <button class="nav-btn primary" id="nextBtn" ${state.qIndex === exam.questions.length - 1 ? "disabled" : ""}>Next →</button>
+      </div>
+    </div>
+  `;
+
+  // events
+  document.getElementById("backBtn").addEventListener("click", () => {
+    state.view = "home";
+    state.exam = null;
+    render();
+  });
+  document.getElementById("closeBtn").addEventListener("click", () => {
+    state.view = "home";
+    state.exam = null;
+    render();
+  });
+
+  if (!answered) {
+    document.querySelectorAll(".option").forEach(opt => {
+      opt.addEventListener("click", () => {
+        const chosen = opt.dataset.letter;
+        if (!state.progress[exam.id]) state.progress[exam.id] = {};
+        state.progress[exam.id][state.qIndex] = {
+          chosen,
+          correct: chosen === q.correct
+        };
+        saveProgress();
+        state.showExplanation = false;
+        renderQuiz();
+      });
+    });
+  }
+
+  const explBtn = document.getElementById("explBtn");
+  if (explBtn) {
+    explBtn.addEventListener("click", () => {
+      state.showExplanation = !state.showExplanation;
+      renderQuiz();
+    });
+  }
+
+  document.querySelectorAll("[data-qnav]").forEach(btn => {
+    btn.addEventListener("click", () => {
+      state.qIndex = parseInt(btn.dataset.qnav);
+      state.showExplanation = false;
+      renderQuiz();
+      window.scrollTo(0, 0);
+    });
+  });
+
+  document.getElementById("prevBtn").addEventListener("click", () => {
+    if (state.qIndex > 0) {
+      state.qIndex--;
+      state.showExplanation = false;
+      renderQuiz();
+      window.scrollTo(0, 0);
+    }
+  });
+  document.getElementById("nextBtn").addEventListener("click", () => {
+    if (state.qIndex < exam.questions.length - 1) {
+      state.qIndex++;
+      state.showExplanation = false;
+      renderQuiz();
+      window.scrollTo(0, 0);
+    }
+  });
+}
+
+render();
+</script>
+</body>
+</html>
