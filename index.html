@@ -480,6 +480,48 @@
 <div id="app"></div>
 <div class="toast" id="toast"></div>
 
+
+
+
+/* =====================================================================
+   ██████████████████████████████████████████████████████████████████
+   ██                                                              ██
+   ██                  NOTES DATA — ADD NOTES HERE                 ██
+   ██                                                              ██
+   ██████████████████████████████████████████████████████████████████
+
+   Structure:
+   
+   {
+     id: "unique-id",
+     subject: "Anatomy",
+     title: "Cardiovascular Histology Summary",
+     icon: "📝",
+     content: "Your note content here. You can use <strong>bold</strong>,<br>line breaks, and HTML."
+   }
+
+   Each note is a separate object. Multiple notes per subject are fine.
+   ===================================================================== */
+
+const NOTES_DATA = [
+  /* ADD YOUR NOTES HERE */
+  // Example (uncomment to use):
+  // {
+  //   id: "anatomy-note-1",
+  //   subject: "Anatomy",
+  //   title: "Cardiovascular Histology Summary",
+  //   icon: "📝",
+  //   content: "The cardiovascular system consists of the heart and blood vessels. <strong>Arteries</strong> have thick tunica media, whereas <strong>veins</strong> have thinner media and thicker adventitia. Capillaries are classified as continuous, fenestrated, or sinusoidal."
+  // }
+];
+
+const QUIZ_DATA = [
+
+
+
+
+
+  
 <script>
 /* =====================================================================
    ██████████████████████████████████████████████████████████████████
@@ -1864,9 +1906,11 @@ function getCourseStyle(subject) {
 }
 
 const state = {
-  view: "courses",     // "courses" | "years" | "quiz" | "finish"
+  view: "courses",     // "courses" | "years" | "quiz" | "finish" | "notes" | "note"
   search: "",
   course: null,        // subject name
+  noteSubject: null,   // subject for notes view
+  activeNote: null,    // currently open note object
   exam: null,
   qIndex: 0,
   showExplanation: false,
@@ -1917,6 +1961,8 @@ function render() {
   if (state.view === "quiz") return renderQuiz();
   if (state.view === "finish") return renderFinish();
   if (state.view === "years") return renderYears();
+  if (state.view === "notes") return renderNotesCourses();
+  if (state.view === "note") return renderNoteDetail();
   renderCourses();
 }
 
@@ -1955,7 +2001,15 @@ function renderCourses() {
           <div class="logo-sub">Past Year Exams</div>
         </div>
       </div>
-      <div class="avatar">MD</div>
+          <div style="display:flex;gap:8px;">
+        <button class="icon-btn" id="notesBtn" title="Notes">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+            <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/>
+            <path d="M14 2v6h6M8 13h8M8 17h5"/>
+          </svg>
+        </button>
+        <div class="avatar">MD</div>
+      </div>
     </header>
 
     ${QUIZ_DATA.length > 0 ? `
@@ -1988,6 +2042,36 @@ function renderCourses() {
       Courses
       <span class="count">${filtered.length}</span>
     </div>
+
+
+
+
+
+                    ${NOTES_DATA.length > 0 ? `
+      <div class="section-title" style="margin-top:8px;">
+        Study Notes
+        <span class="count">${NOTES_DATA.length}</span>
+      </div>
+      <div class="list" style="margin-bottom:16px;">
+        <button class="course-card" data-open-notes-quick="1"
+          style="--course-color:#7c4dff;--course-color-2:#4d9fff;">
+          <div class="course-thumb" style="background:rgba(124,77,255,0.12);border-color:rgba(124,77,255,0.3);">📝</div>
+          <div class="course-body">
+            <div class="course-title">Open Notes</div>
+            <div class="course-meta">${NOTES_DATA.length} notes across ${[...new Set(NOTES_DATA.map(n=>n.subject))].length} courses</div>
+          </div>
+          <svg class="course-arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M9 18l6-6-6-6"/></svg>
+        </button>
+      </div>
+    ` : ""}
+
+
+
+
+
+
+
+
 
     ${QUIZ_DATA.length === 0
       ? `<div class="empty-state">
@@ -2052,6 +2136,49 @@ function bindCourseEvents() {
       window.scrollTo(0, 0);
     });
   });
+
+               /* added note*/
+  
+  const notesBtn = document.getElementById("notesBtn");
+  if (notesBtn) {
+    notesBtn.addEventListener("click", () => {
+      state.view = "notes";
+      state.noteSubject = null;
+      state.activeNote = null;
+      render();
+      window.scrollTo(0, 0);
+    });
+  }
+
+
+
+
+
+
+
+
+  document.querySelectorAll("[data-open-notes-quick]").forEach(el => {
+    el.addEventListener("click", () => {
+      state.view = "notes";
+      state.noteSubject = null;
+      state.activeNote = null;
+      render();
+      window.scrollTo(0, 0);
+    });
+  });
+
+
+
+
+      
+                /* added note end */
+           
+
+
+
+
+
+  
   document.querySelectorAll("[data-continue]").forEach(el => {
     el.addEventListener("click", () => {
       const exam = QUIZ_DATA.find(e => e.id === el.dataset.continue);
@@ -2183,6 +2310,226 @@ function renderYearCard(exam, style) {
   `;
 }
 
+
+
+
+  /*Code added here*/
+
+
+  
+
+/* =====================================================================
+   NOTES — COURSES LIST
+   ===================================================================== */
+function renderNotesCourses() {
+  const subjectsWithNotes = [...new Set(NOTES_DATA.map(n => n.subject))];
+  const allCourses = [...new Set(QUIZ_DATA.map(e => e.subject))];
+  const coursesToShow = allCourses.length > 0
+    ? [...new Set([...allCourses, ...subjectsWithNotes])]
+    : subjectsWithNotes;
+
+  app.innerHTML = `
+    <header class="topbar">
+      <div class="logo-wrap">
+        <button class="icon-btn" id="backToCoursesFromNotes" title="Back" style="margin-right: 4px;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+            <path d="M19 12H5M12 19l-7-7 7-7"/>
+          </svg>
+        </button>
+        <div class="logo-badge" style="background:linear-gradient(135deg,#7c4dff,#4d9fff);">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+            <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/>
+            <path d="M14 2v6h6"/>
+          </svg>
+        </div>
+        <div>
+          <div class="logo-text">Notes</div>
+          <div class="logo-sub">${NOTES_DATA.length} ${NOTES_DATA.length === 1 ? "note" : "notes"} available</div>
+        </div>
+      </div>
+      <div class="avatar">MD</div>
+    </header>
+
+    <div class="crumbs">
+      <span class="crumb link" data-crumb-notes="courses">Courses</span>
+      <span class="crumb-sep">›</span>
+      <span class="crumb current">Notes</span>
+    </div>
+
+    ${coursesToShow.length === 0
+      ? `<div class="empty-state">
+           <span class="emoji">📝</span>
+           <div class="title">No notes yet</div>
+           <div class="desc">Add notes to the NOTES_DATA section in the file to see them here.</div>
+         </div>`
+      : `
+        <div class="section-title">
+          Courses
+          <span class="count">${coursesToShow.length}</span>
+        </div>
+        <div class="list">
+          ${coursesToShow.map(renderNoteCourseCard).join("")}
+        </div>
+      `
+    }
+  `;
+
+  bindNotesEvents();
+}
+
+function renderNoteCourseCard(subject) {
+  const style = getCourseStyle(subject);
+  const notes = NOTES_DATA.filter(n => n.subject === subject);
+  const count = notes.length;
+
+  return `
+    <button class="course-card"
+            data-note-course="${escapeHtml(subject)}"
+            style="--course-color:${style.color};--course-color-2:${style.color2};--course-bg:${style.bg};--course-border:${style.border};">
+      <div class="course-thumb" style="background:${style.bg};border-color:${style.border};">
+        ${style.icon}
+      </div>
+      <div class="course-body">
+        <div class="course-title">${escapeHtml(subject)}</div>
+        <div class="course-meta">
+          ${count} ${count === 1 ? "note" : "notes"}
+          ${count === 0 ? `<span class="dot">·</span>Coming soon` : ""}
+        </div>
+      </div>
+      <svg class="course-arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M9 18l6-6-6-6"/></svg>
+    </button>
+  `;
+}
+
+function bindNotesEvents() {
+  const back = document.getElementById("backToCoursesFromNotes");
+  if (back) {
+    back.addEventListener("click", () => {
+      state.view = "courses";
+      render();
+      window.scrollTo(0, 0);
+    });
+  }
+  document.querySelectorAll("[data-crumb-notes]").forEach(el => {
+    el.addEventListener("click", () => {
+      state.view = "courses";
+      render();
+      window.scrollTo(0, 0);
+    });
+  });
+  document.querySelectorAll("[data-note-course]").forEach(el => {
+    el.addEventListener("click", () => {
+      state.noteSubject = el.dataset.noteCourse;
+      state.view = "note";
+      render();
+      window.scrollTo(0, 0);
+    });
+  });
+}
+
+/* =====================================================================
+   NOTES — DETAIL VIEW (list of notes for a subject)
+   ===================================================================== */
+function renderNoteDetail() {
+  const subject = state.noteSubject;
+  const style = getCourseStyle(subject);
+  const notes = NOTES_DATA.filter(n => n.subject === subject);
+
+  app.innerHTML = `
+    <header class="topbar">
+      <div class="logo-wrap">
+        <button class="icon-btn" id="backToNotesList" title="Back" style="margin-right: 4px;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+            <path d="M19 12H5M12 19l-7-7 7-7"/>
+          </svg>
+        </button>
+        <div class="logo-badge" style="background:linear-gradient(135deg,${style.color},${style.color2});">
+          ${style.icon}
+        </div>
+        <div>
+          <div class="logo-text">${escapeHtml(subject)}</div>
+          <div class="logo-sub">${notes.length} ${notes.length === 1 ? "note" : "notes"}</div>
+        </div>
+      </div>
+      <div class="avatar">MD</div>
+    </header>
+
+    <div class="crumbs">
+      <span class="crumb link" data-crumb-notes="courses">Courses</span>
+      <span class="crumb-sep">›</span>
+      <span class="crumb link" data-crumb-notes="notes">Notes</span>
+      <span class="crumb-sep">›</span>
+      <span class="crumb current">${escapeHtml(subject)}</span>
+    </div>
+
+    ${notes.length === 0
+      ? `<div class="empty-state">
+           <span class="emoji">📝</span>
+           <div class="title">No notes for ${escapeHtml(subject)}</div>
+           <div class="desc">Add notes for this course in the NOTES_DATA section.</div>
+         </div>`
+      : `<div class="list" style="gap:14px;">
+          ${notes.map(renderNoteCard).join("")}
+        </div>`
+    }
+  `;
+
+  bindNoteDetailEvents();
+}
+
+function renderNoteCard(note) {
+  return `
+    <div class="note-card" style="
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 18px;
+    ">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
+        <div style="font-size:20px;">${note.icon || "📝"}</div>
+        <div style="font-size:15px;font-weight:800;">${escapeHtml(note.title)}</div>
+      </div>
+      <div style="font-size:14px;line-height:1.75;color:#c9d1d9;">
+        ${note.content || "No content."}
+      </div>
+    </div>
+  `;
+}
+
+function bindNoteDetailEvents() {
+  document.querySelectorAll("[data-crumb-notes]").forEach(el => {
+    el.addEventListener("click", () => {
+      const target = el.dataset.crumbNotes;
+      if (target === "courses") {
+        state.view = "courses";
+      } else if (target === "notes") {
+        state.view = "notes";
+      }
+      render();
+      window.scrollTo(0, 0);
+    });
+  });
+
+  const back = document.getElementById("backToNotesList");
+  if (back) {
+    back.addEventListener("click", () => {
+      state.view = "notes";
+      render();
+      window.scrollTo(0, 0);
+    });
+  }
+}
+
+
+/*added code ended here*/
+  
+
+
+
+
+
+
+  
 /* =====================================================================
    QUIZ VIEW
    ===================================================================== */
