@@ -941,51 +941,812 @@ const QUIZ_DATA = [
   },
 
   /* ========== MICROBIOLOGY ========== */
+   /* ========== MICROBIOLOGY ========== */
   {
-    id: "micro-2014", subject: "Microbiology", topic: "General", year: 2014,
-    title: "Microbiology 2014", icon: "🦠", section: "PLATE I",
+    id: "micro-2014",
+    subject: "Microbiology",
+    topic: "Respiratory",
+    year: 2014,
+    title: "Microbiology 2014",
+    icon: "🦠",
+    section: "Respiratory Infections",
     questions: [
-      { q: "Sample Microbiology 2014 question:",
+      {
+        q: "Which statement is NOT true about Corynebacterium diphtheriae?",
         options: [
-          { letter: "A", text: "Option A" }, { letter: "B", text: "Option B" },
-          { letter: "C", text: "Option C" }, { letter: "D", text: "Option D" }, { letter: "E", text: "Option E" }
-        ], correct: "A", explanation: "Explanation for this Microbiology 2014 question." }
+          { letter: "A", text: "Causes lower respiratory infection" },
+          { letter: "B", text: "Causes upper respiratory infection" },
+          { letter: "C", text: "Secretes an exotoxin that inhibits protein synthesis" },
+          { letter: "D", text: "Forms a pseudomembrane on the pharynx" }
+        ],
+        correct: "A",
+        explanation: "C. diphtheriae primarily infects the <strong>upper respiratory tract</strong> (pharynx, tonsils, larynx). It produces an exotoxin that inhibits protein synthesis by inactivating <strong>elongation factor-2 (EF-2)</strong>, and forms a thick gray pseudomembrane over the pharynx."
+      },
+      {
+        q: "Bacitracin sensitivity is to S. pyogenes and Optochin sensitivity is to:",
+        options: [
+          { letter: "A", text: "Bordetella pertussis" },
+          { letter: "B", text: "Bacillus anthracis" },
+          { letter: "C", text: "Streptococcus pneumoniae" },
+          { letter: "D", text: "Mycobacterium tuberculosis" }
+        ],
+        correct: "C",
+        explanation: "<strong>Optochin sensitivity</strong> identifies <strong>S. pneumoniae</strong>, an alpha-hemolytic, Gram-positive diplococcus that is also <strong>bile soluble</strong>. This distinguishes it from viridans streptococci (optochin-resistant, bile-insoluble). <strong>Bacitracin sensitivity</strong> identifies S. pyogenes."
+      },
+      {
+        q: "Otitis media is caused by all except one:",
+        options: [
+          { letter: "A", text: "Mycobacterium tuberculosis" },
+          { letter: "B", text: "Streptococcus pneumoniae" },
+          { letter: "C", text: "Moraxella catarrhalis" },
+          { letter: "D", text: "Nontypeable Haemophilus influenzae" }
+        ],
+        correct: "A",
+        explanation: "The three most common bacterial causes of acute otitis media are <strong>S. pneumoniae, nontypeable H. influenzae, and M. catarrhalis</strong>. M. tuberculosis is a rare cause of chronic ear infection, not a typical cause of acute otitis media."
+      },
+      {
+        q: "Mycolic acid is found in the cell wall of:",
+        options: [
+          { letter: "A", text: "Bordetella pertussis" },
+          { letter: "B", text: "Bacillus anthracis" },
+          { letter: "C", text: "Streptococcus pneumoniae" },
+          { letter: "D", text: "Mycobacterium tuberculosis" }
+        ],
+        correct: "D",
+        explanation: "<strong>Mycolic acid</strong> is the hallmark of <strong>Mycobacterium</strong> species. It gives the cell wall a waxy, lipid-rich quality and makes the bacteria <strong>acid-fast</strong> (retains primary stain in Ziehl-Neelsen staining even after acid-alcohol decolorization)."
+      },
+      {
+        q: "Which is NOT a typical clinical presentation of pulmonary tuberculosis?",
+        options: [
+          { letter: "A", text: "Pharyngitis" },
+          { letter: "B", text: "Night sweating" },
+          { letter: "C", text: "Haemoptysis (bloody sputum)" },
+          { letter: "D", text: "Productive cough" }
+        ],
+        correct: "A",
+        explanation: "Pulmonary TB presents with <strong>chronic productive cough, hemoptysis, night sweats, fever, and weight loss</strong>. <strong>Pharyngitis</strong> is not a typical feature of pulmonary TB."
+      },
+      {
+        q: "Which form of anthrax could be used as a biological weapon?",
+        options: [
+          { letter: "A", text: "Cutaneous anthrax" },
+          { letter: "B", text: "Intestinal anthrax" },
+          { letter: "C", text: "Pulmonary anthrax" },
+          { letter: "D", text: "Cerebral anthrax" }
+        ],
+        correct: "C",
+        explanation: "<strong>Pulmonary (inhalational) anthrax</strong> is associated with biological warfare — spores are inhaled, taken up by alveolar macrophages, transported to mediastinal lymph nodes, and germinate. Cutaneous anthrax (most common form) produces a painless black eschar."
+      },
+      {
+        q: "Paroxysmal stage of pertussis is characterized by:",
+        options: [
+          { letter: "A", text: "Destruction or removal of ciliated cells" },
+          { letter: "B", text: "Common cold-like symptoms" },
+          { letter: "C", text: "Rarely occurring coughing" },
+          { letter: "D", text: "Is a convalescent stage" }
+        ],
+        correct: "A",
+        explanation: "During the <strong>paroxysmal stage</strong>, the bacteria have already damaged the <strong>ciliated epithelial cells</strong> through pertussis toxin and tracheal cytotoxin, impairing mucociliary clearance and leading to repeated episodes of severe coughing (paroxysms) with the characteristic whoop."
+      },
+      {
+        q: "Pontiac fever is caused by:",
+        options: [
+          { letter: "A", text: "Streptococcus pyogenes" },
+          { letter: "B", text: "Haemophilus influenzae" },
+          { letter: "C", text: "Legionella pneumophila" },
+          { letter: "D", text: "Corynebacterium diphtheriae" }
+        ],
+        correct: "C",
+        explanation: "<strong>Pontiac fever</strong> is a mild, self-limiting illness caused by <strong>Legionella pneumophila</strong>, transmitted by inhaling contaminated aerosols. Unlike Legionnaires' disease, Pontiac fever does not usually cause pneumonia."
+      },
+      {
+        q: "Which statement is NOT true about antigenic shift?",
+        options: [
+          { letter: "A", text: "Occurs in Influenza A and B" },
+          { letter: "B", text: "Occurs only in Influenza A" },
+          { letter: "C", text: "There is formation/appearance of a new viral strain" },
+          { letter: "D", text: "There is genome exchange of two strains" }
+        ],
+        correct: "A",
+        explanation: "<strong>Antigenic shift occurs only in Influenza A</strong>, not in Influenza B or C. It results from <strong>genome reassortment</strong> between two different Influenza A viruses in the same host, producing a new subtype with novel HA and/or NA — potentially causing pandemics."
+      },
+      {
+        q: "Virus that is transmitted commonly through inhalation of infected rodent excrement and saliva:",
+        options: [
+          { letter: "A", text: "Hantavirus" },
+          { letter: "B", text: "Haemophilus influenzae" },
+          { letter: "C", text: "Orthomyxoviruses" },
+          { letter: "D", text: "Corynebacterium diphtheriae" }
+        ],
+        correct: "A",
+        explanation: "<strong>Hantavirus</strong> is a zoonotic virus transmitted mainly by inhalation of aerosolized urine, feces, saliva, or nesting materials of infected rodents. Causes Hantavirus Pulmonary Syndrome (HPS) or Hemorrhagic Fever with Renal Syndrome (HFRS)."
+      },
+      {
+        q: "Formation of a fungal ball in a cavity formed in pre-existing lung disease is commonly seen in infection with:",
+        options: [
+          { letter: "A", text: "Blastomyces dermatitidis" },
+          { letter: "B", text: "Histoplasma capsulatum" },
+          { letter: "C", text: "Coccidioides immitis" },
+          { letter: "D", text: "Aspergillus fumigatus" }
+        ],
+        correct: "D",
+        explanation: "<strong>Aspergillus fumigatus</strong> commonly forms an <strong>aspergilloma (fungal ball)</strong> within pre-existing lung cavities (TB, bronchiectasis, sarcoidosis). The most characteristic clinical manifestation is <strong>hemoptysis</strong>, which may be severe."
+      },
+      {
+        q: "Croup is caused by:",
+        options: [
+          { letter: "A", text: "Parainfluenza virus" },
+          { letter: "B", text: "Coxsackie A virus" },
+          { letter: "C", text: "Rhinoviruses" },
+          { letter: "D", text: "Coronaviruses" }
+        ],
+        correct: "A",
+        explanation: "<strong>Croup (laryngotracheobronchitis)</strong> is most commonly caused by <strong>Parainfluenza virus type 1</strong>. Typical features: <strong>barking cough, inspiratory stridor, hoarseness</strong>. Mainly affects children 6 months–3 years."
+      },
+      {
+        q: "Herpangina is caused by a virus called:",
+        options: [
+          { letter: "A", text: "Parainfluenza virus" },
+          { letter: "B", text: "Coxsackie A virus" },
+          { letter: "C", text: "Rhinoviruses" },
+          { letter: "D", text: "Coronaviruses" }
+        ],
+        correct: "B",
+        explanation: "<strong>Herpangina</strong> is caused by <strong>Coxsackie A virus</strong> (Enterovirus genus). Presents with fever, sore throat, and painful vesicles/ulcers on the soft palate, tonsils, uvula, and posterior pharynx. Coxsackie A also causes Hand, Foot, and Mouth Disease (HFMD)."
+      },
+      {
+        q: "Which bacterium is found in high concentration in the placenta of farm animals?",
+        options: [
+          { letter: "A", text: "Streptococcus pyogenes" },
+          { letter: "B", text: "Haemophilus influenzae" },
+          { letter: "C", text: "Coxiella burnetii" },
+          { letter: "D", text: "Corynebacterium diphtheriae" }
+        ],
+        correct: "C",
+        explanation: "<strong>Coxiella burnetii</strong> (Q fever) is found in very high concentrations in the <strong>placenta, amniotic fluid, and birth products</strong> of infected sheep, goats, and cattle. Humans are infected by inhaling contaminated aerosols."
+      },
+      {
+        q: "Tonsillitis or pharyngitis is commonly caused by:",
+        options: [
+          { letter: "A", text: "Pertussis (Bordetella pertussis)" },
+          { letter: "B", text: "Streptococcus pyogenes" },
+          { letter: "C", text: "Streptococcus pneumoniae" },
+          { letter: "D", text: "Mycobacterium tuberculosis" }
+        ],
+        correct: "B",
+        explanation: "<strong>Streptococcus pyogenes (Group A β-hemolytic Streptococcus)</strong> is the most common bacterial cause of acute pharyngitis and tonsillitis. Untreated infection may lead to <strong>acute rheumatic fever</strong> and <strong>post-streptococcal glomerulonephritis</strong>."
+      }
     ]
   },
   {
-    id: "micro-2015", subject: "Microbiology", topic: "General", year: 2015,
-    title: "Microbiology 2015", icon: "🦠", section: "PLATE I",
+    id: "micro-2015",
+    subject: "Microbiology",
+    topic: "Respiratory",
+    year: 2015,
+    title: "Microbiology 2015",
+    icon: "🦠",
+    section: "Respiratory Infections",
     questions: [
-      { q: "Sample Microbiology 2015 question:",
+      {
+        q: "Which of the following is TRUE regarding the development of pneumonia?",
         options: [
-          { letter: "A", text: "Option A" }, { letter: "B", text: "Option B" },
-          { letter: "C", text: "Option C" }, { letter: "D", text: "Option D" }, { letter: "E", text: "Option E" }
-        ], correct: "A", explanation: "Explanation for this Microbiology 2015 question." }
+          { letter: "A", text: "Pneumonia is an acute inflammatory condition within the parenchyma of the lung" },
+          { letter: "B", text: "Immunocompromised individuals are at increased risk of developing pneumonia" },
+          { letter: "C", text: "Pneumonia often develops as a consequence of bacterial colonization and microaspiration of upper respiratory tract secretions during impaired pulmonary defense mechanisms" },
+          { letter: "D", text: "All of the above" }
+        ],
+        correct: "D",
+        explanation: "All three statements are correct. Pneumonia is an <strong>acute infection and inflammatory condition of the lung parenchyma</strong>. Impaired immunity increases risk, and <strong>microaspiration of upper respiratory secretions</strong> is an important route of infection."
+      },
+      {
+        q: "A 7-year-old boy has swollen and erythematous pharynx and tonsils, tonsillar exudate, fever, tender cervical lymphadenopathy, and leukocytosis. What is the most likely diagnosis?",
+        options: [
+          { letter: "A", text: "Acute viral infection" },
+          { letter: "B", text: "Acute bacterial pharyngitis" },
+          { letter: "C", text: "Severe acute respiratory syndrome" },
+          { letter: "D", text: "Acute lower respiratory infection" }
+        ],
+        correct: "B",
+        explanation: "The presentation strongly suggests <strong>acute bacterial pharyngitis</strong>, particularly due to <strong>S. pyogenes</strong>. Classic features: fever + tonsillar exudate + tender anterior cervical lymph nodes + leukocytosis."
+      },
+      {
+        q: "Which statement is NOT true about Corynebacterium diphtheriae?",
+        options: [
+          { letter: "A", text: "Causes lower respiratory infection" },
+          { letter: "B", text: "Causes upper respiratory infection" },
+          { letter: "C", text: "Secretes an exotoxin that inhibits protein synthesis" },
+          { letter: "D", text: "Forms pseudomembrane on the pharynx" }
+        ],
+        correct: "A",
+        explanation: "C. diphtheriae primarily causes an <strong>upper</strong> respiratory infection. The exotoxin inactivates <strong>EF-2</strong> to inhibit protein synthesis, and it forms a characteristic gray pseudomembrane over the pharynx and tonsils."
+      },
+      {
+        q: "Paroxysmal stage of pertussis is characterized by:",
+        options: [
+          { letter: "A", text: "Common cold-like symptoms" },
+          { letter: "B", text: "Rarely occurring coughing" },
+          { letter: "C", text: "Convalescent stage" },
+          { letter: "D", text: "Repetitive cough with whoops" }
+        ],
+        correct: "D",
+        explanation: "The paroxysmal stage is characterized by <strong>repeated, severe bursts of coughing</strong> followed by a forceful inspiration producing the characteristic <strong>\"whoop.\"</strong> Post-tussive vomiting can also occur."
+      },
+      {
+        q: "A 2-day-old premature baby develops pneumonia. The mother had symptoms of UTI after delivery, and beta-hemolytic colonies were found. Which pathogen can spread from mother to baby and cause pneumonia?",
+        options: [
+          { letter: "A", text: "Streptococcus pyogenes" },
+          { letter: "B", text: "Streptococcus bovis" },
+          { letter: "C", text: "Streptococcus agalactiae" },
+          { letter: "D", text: "Enterococcus faecalis" }
+        ],
+        correct: "C",
+        explanation: "<strong>Streptococcus agalactiae (Group B Strep)</strong> colonizes the female genital/GI tracts and can be transmitted to the newborn during labor/delivery. A leading cause of <strong>neonatal pneumonia, sepsis, and meningitis</strong>. It is beta-hemolytic."
+      },
+      {
+        q: "Which bacterial pathogen is the most common cause of community-acquired pneumonia in adults?",
+        options: [
+          { letter: "A", text: "Staphylococcus aureus" },
+          { letter: "B", text: "Mycoplasma pneumoniae" },
+          { letter: "C", text: "Streptococcus pneumoniae" },
+          { letter: "D", text: "Chlamydophila pneumoniae" }
+        ],
+        correct: "C",
+        explanation: "<strong>Streptococcus pneumoniae</strong> is the classic most common bacterial cause of <strong>community-acquired pneumonia (CAP)</strong> in adults. It is an encapsulated, Gram-positive, lancet-shaped diplococcus."
+      },
+      {
+        q: "Which of the following bacteria is an obligate aerobe and a highly contagious pathogen that may cause serious respiratory infections in young children?",
+        options: [
+          { letter: "A", text: "Haemophilus ducreyi" },
+          { letter: "B", text: "Francisella tularensis" },
+          { letter: "C", text: "Haemophilus parainfluenzae" },
+          { letter: "D", text: "Bordetella pertussis" }
+        ],
+        correct: "D",
+        explanation: "<strong>Bordetella pertussis</strong> is an obligate aerobe, Gram-negative coccobacillus, and a highly contagious cause of <strong>pertussis (whooping cough)</strong>. Produces pertussis toxin and progresses through catarrhal → paroxysmal → convalescent stages."
+      },
+      {
+        q: "Which bacterium is a strict aerobic, Gram-negative, rod-shaped organism associated with cystic fibrosis, burns, hospital-acquired infections, ventilator-associated pneumonia, and sepsis?",
+        options: [
+          { letter: "A", text: "Pseudomonas aeruginosa" },
+          { letter: "B", text: "Klebsiella pneumoniae" },
+          { letter: "C", text: "Helicobacter pylori" },
+          { letter: "D", text: "Campylobacter jejuni" }
+        ],
+        correct: "A",
+        explanation: "<strong>Pseudomonas aeruginosa</strong> is a Gram-negative, aerobic, rod-shaped opportunistic pathogen. Strongly associated with <strong>cystic fibrosis, burns, hospital-acquired pneumonia, VAP, and sepsis</strong>. Can form biofilms."
+      },
+      {
+        q: "Which human fungal species also occurs in the lungs of animals and causes pneumonia in immunocompromised patients?",
+        options: [
+          { letter: "A", text: "Aspergillus niger" },
+          { letter: "B", text: "Pneumocystis jirovecii" },
+          { letter: "C", text: "Penicillium marneffei" },
+          { letter: "D", text: "Fusarium" }
+        ],
+        correct: "B",
+        explanation: "<strong>Pneumocystis jirovecii</strong> causes <strong>Pneumocystis pneumonia (PCP)</strong> in immunocompromised patients (especially advanced HIV/AIDS with low CD4 counts). Presents with progressive dry cough, fever, and shortness of breath."
+      },
+      {
+        q: "A 69-year-old woman has fever, cough, chest pain, body aches, and lobar pneumonia. Round diplococci in chains were isolated. Which pathogen is most likely?",
+        options: [
+          { letter: "A", text: "Streptococcus pneumoniae" },
+          { letter: "B", text: "Neisseria gonorrhoeae" },
+          { letter: "C", text: "Haemophilus influenzae" },
+          { letter: "D", text: "Bordetella pertussis" }
+        ],
+        correct: "A",
+        explanation: "<strong>Streptococcus pneumoniae</strong> — a Gram-positive, lancet-shaped encapsulated diplococcus. Classic cause of <strong>lobar pneumonia</strong> in older adults. Its capsule is its major virulence factor (antiphagocytic)."
+      },
+      {
+        q: "All of the following statements regarding Mycoplasma pneumoniae are true, EXCEPT:",
+        options: [
+          { letter: "A", text: "It lacks a cell wall" },
+          { letter: "B", text: "It is a causative agent of atypical pneumonia in humans" },
+          { letter: "C", text: "It is pleomorphic and one of the smallest free-living microorganisms" },
+          { letter: "D", text: "It can be cultivated on regular nutrient agar media" }
+        ],
+        correct: "D",
+        explanation: "<strong>Mycoplasma pneumoniae</strong> lacks a cell wall, is pleomorphic, and causes atypical pneumonia. It <strong>requires specialized media containing sterols</strong> — it cannot be cultivated on regular nutrient agar. β-lactams (which target cell walls) are ineffective."
+      },
+      {
+        q: "A 2-year-old unvaccinated child has dysphonia, a grayish exudate over the tonsils, larynx and pharynx, and massive tender cervical lymphadenitis. What is the most likely cause?",
+        options: [
+          { letter: "A", text: "Corynebacterium diphtheriae" },
+          { letter: "B", text: "Streptococcus pneumoniae" },
+          { letter: "C", text: "Bordetella pertussis" },
+          { letter: "D", text: "Haemophilus influenzae" }
+        ],
+        correct: "A",
+        explanation: "Classic <strong>respiratory diphtheria</strong>. Clues: unvaccinated child + gray adherent pseudomembrane + dysphonia + massive cervical lymphadenopathy (<strong>\"bull neck\"</strong>). C. diphtheriae toxin inhibits EF-2 → blocks protein synthesis."
+      },
+      {
+        q: "A 4-year-old child develops a common cold, followed by a barking cough, persistent fever, and louder breathing sounds. Which pathogen is most likely?",
+        options: [
+          { letter: "A", text: "Haemophilus influenzae" },
+          { letter: "B", text: "Rhinovirus" },
+          { letter: "C", text: "Parainfluenza virus" },
+          { letter: "D", text: "Corynebacterium diphtheriae" }
+        ],
+        correct: "C",
+        explanation: "Classic <strong>croup (laryngotracheobronchitis)</strong> caused by <strong>Parainfluenza virus (type 1)</strong>. Barking cough + inspiratory stridor + hoarseness in a young child. Often worse at night."
+      },
+      {
+        q: "Which pathogen is a major cause of nosocomial/hospital-acquired pneumonia?",
+        options: [
+          { letter: "A", text: "Streptococcus pneumoniae" },
+          { letter: "B", text: "Escherichia coli" },
+          { letter: "C", text: "Pseudomonas aeruginosa" },
+          { letter: "D", text: "Acinetobacter baumannii" },
+          { letter: "E", text: "Neisseria meningitidis" }
+        ],
+        correct: "C",
+        explanation: "<strong>Pseudomonas aeruginosa</strong> is a classic cause of <strong>HAP/VAP</strong>. Associated with prolonged hospitalization, mechanical ventilation, burns, and immunosuppression. Can develop multidrug resistance."
+      },
+      {
+        q: "Which bacterium is the most commonly isolated pathogen from pharyngitis?",
+        options: [
+          { letter: "A", text: "Streptococcus pneumoniae" },
+          { letter: "B", text: "Staphylococcus aureus" },
+          { letter: "C", text: "Streptococcus pyogenes" },
+          { letter: "D", text: "Mycoplasma pneumoniae" }
+        ],
+        correct: "C",
+        explanation: "<strong>Streptococcus pyogenes (Group A Strep)</strong> is the most classic bacterial cause of acute pharyngitis, especially in school-aged children. Treatment reduces risk of <strong>acute rheumatic fever</strong>."
+      },
+      {
+        q: "Because of time and technical limitations of viral cultures, laboratory diagnosis of viral pneumonia in adults usually relies on:",
+        options: [
+          { letter: "A", text: "Lung biopsy" },
+          { letter: "B", text: "Acute and convalescent serologic testing" },
+          { letter: "C", text: "Nasal swab for slide preparation and staining" },
+          { letter: "D", text: "Rapid antigen detection, often using molecular techniques" }
+        ],
+        correct: "D",
+        explanation: "Modern diagnosis of viral pneumonia relies on <strong>rapid antigen detection and molecular techniques (PCR/NAAT)</strong>. These are rapid and sensitive. Viral culture is slow and technically demanding."
+      },
+      {
+        q: "The difference between latent TB infection and active TB disease is that:",
+        options: [
+          { letter: "A", text: "People with latent TB infection are not infectious, whereas people with active TB disease can be infectious" },
+          { letter: "B", text: "Only active TB disease can be detected by a tuberculin skin test" },
+          { letter: "C", text: "People with latent TB infection are infectious, whereas people with active TB disease are not" },
+          { letter: "D", text: "Latent TB infection is curable but active TB disease is not" }
+        ],
+        correct: "A",
+        explanation: "<strong>Latent TB</strong>: person has M. tuberculosis but no symptoms and does not transmit. <strong>Active TB</strong>: bacteria multiply causing disease, and pulmonary/laryngeal TB can be infectious. Both can be treated and cured."
+      },
+      {
+        q: "Which technology is most amenable to point-of-care testing for TB, allowing treatment decisions during the same visit?",
+        options: [
+          { letter: "A", text: "Smear microscopy" },
+          { letter: "B", text: "GeneXpert MTB/RIF" },
+          { letter: "C", text: "Culture" },
+          { letter: "D", text: "Serological test" }
+        ],
+        correct: "B",
+        explanation: "<strong>GeneXpert MTB/RIF</strong> is a rapid molecular test that detects M. tuberculosis <strong>and</strong> rifampicin resistance directly from a clinical specimen. Much faster than culture (which takes weeks because M. tuberculosis grows slowly)."
+      },
+      {
+        q: "Which form of anthrax could be used as a biological weapon?",
+        options: [
+          { letter: "A", text: "Cutaneous anthrax" },
+          { letter: "B", text: "Intestinal anthrax" },
+          { letter: "C", text: "Pulmonary anthrax" },
+          { letter: "D", text: "Cerebral anthrax" }
+        ],
+        correct: "C",
+        explanation: "<strong>Pulmonary (inhalational) anthrax</strong> is associated with aerosolized spores and bioterrorism concern. Severe disease can progress to hemorrhagic mediastinitis, sepsis, and respiratory failure. Cutaneous is the most common naturally-acquired form (painless black eschar)."
+      },
+      {
+        q: "Your patient is diagnosed with a latent tuberculosis infection. Select one correct statement that reflects this condition:",
+        options: [
+          { letter: "A", text: "The patient will feel ill and will have signs and symptoms" },
+          { letter: "B", text: "The patient will have a positive tuberculin skin test or IGRA test" },
+          { letter: "C", text: "The patient will have an abnormal chest X-ray" },
+          { letter: "D", text: "The patient's sputum will test positive for Mycobacterium tuberculosis" }
+        ],
+        correct: "B",
+        explanation: "Latent TB: person has been infected but bacteria are controlled by the immune system. The patient is <strong>asymptomatic, non-infectious, has a normal chest X-ray, and a positive TST/IGRA</strong>. Can reactivate if immunity weakens."
+      },
+      {
+        q: "Which of the following are interventions to improve adherence for TB medications?",
+        options: [
+          { letter: "A", text: "Directly observed therapy (DOT)" },
+          { letter: "B", text: "Incentives" },
+          { letter: "C", text: "Combination products" },
+          { letter: "D", text: "Hospitalization" }
+        ],
+        correct: "A",
+        explanation: "Adherence strategies include <strong>DOT (directly observed therapy), incentives/enablers, and simplified combination products</strong>. Routine hospitalization is not a standard strategy to improve adherence."
+      },
+      {
+        q: "Select the INCORRECT statement regarding respiratory infections, seasonal flu, and the common cold:",
+        options: [
+          { letter: "A", text: "The cold symptoms are usually milder than flu" },
+          { letter: "B", text: "Rhinovirus is the most common causative agent of the common cold" },
+          { letter: "C", text: "Flu vaccination is recommended annually for 6 months of age and older" },
+          { letter: "D", text: "There are no antiviral drugs available for the treatment of flu" }
+        ],
+        correct: "D",
+        explanation: "Antiviral drugs <strong>are</strong> available for influenza: <strong>oseltamivir, zanamivir, and baloxavir</strong>. They are most useful when started early and are especially important for high-risk patients."
+      },
+      {
+        q: "Which is NOT a typical clinical presentation of pulmonary tuberculosis?",
+        options: [
+          { letter: "A", text: "Pharyngitis" },
+          { letter: "B", text: "Night sweating" },
+          { letter: "C", text: "Haemoptysis (bloody sputum)" },
+          { letter: "D", text: "Productive cough" }
+        ],
+        correct: "A",
+        explanation: "Pulmonary TB typically presents with a <strong>chronic productive cough, night sweats, fever, weight loss, and hemoptysis</strong>. Pharyngitis is not typical of pulmonary TB."
+      },
+      {
+        q: "A 54-year-old man with previous pulmonary TB has productive cough and hemoptysis. Imaging shows a fungal ball in a pre-existing lung cavity. What is the most likely causative agent?",
+        options: [
+          { letter: "A", text: "Blastomyces dermatitidis" },
+          { letter: "B", text: "Histoplasma capsulatum" },
+          { letter: "C", text: "Coccidioides immitis" },
+          { letter: "D", text: "Aspergillus fumigatus" }
+        ],
+        correct: "D",
+        explanation: "Classic <strong>aspergilloma (fungal ball)</strong>. Previous pulmonary TB is a classic risk factor because it leaves residual lung cavities. <strong>Aspergillus fumigatus</strong> colonizes the cavity; the main clinical clue is <strong>hemoptysis</strong>."
+      },
+      {
+        q: "Which bacteria is found in high concentration in the placenta of farm animals?",
+        options: [
+          { letter: "A", text: "Streptococcus pyogenes" },
+          { letter: "B", text: "Haemophilus influenzae" },
+          { letter: "C", text: "Corynebacterium diphtheriae" },
+          { letter: "D", text: "Coxiella burnetii" }
+        ],
+        correct: "D",
+        explanation: "<strong>Coxiella burnetii</strong> (Q fever) is shed in very high concentrations in the <strong>placenta, birth fluids, urine, and feces</strong> of infected cattle, sheep, and goats. Humans are infected by inhaling contaminated aerosols."
+      }
     ]
   },
-  {
-    id: "micro-2016", subject: "Microbiology", topic: "General", year: 2016,
-    title: "Microbiology 2016", icon: "🦠", section: "PLATE I",
+  
+   {
+    id: "micro-2016",
+    subject: "Microbiology",
+    topic: "Respiratory",
+    year: 2016,
+    title: "Microbiology 2016",
+    icon: "🦠",
+    section: "Respiratory Infections",
     questions: [
-      { q: "Sample Microbiology 2016 question:",
+      {
+        q: "A 24-year-old woman comes to the clinic with complaints of nasal discharge which is clear and watery and nasal obstruction. Physical examination reveals inflammatory edema of the nasal mucosa, and an increase in mucous secretions. No pain on palpation of the sinuses is noted. Her temperature is 37°C. Which of the following is the most common cause of this patient's condition?",
         options: [
-          { letter: "A", text: "Option A" }, { letter: "B", text: "Option B" },
-          { letter: "C", text: "Option C" }, { letter: "D", text: "Option D" }, { letter: "E", text: "Option E" }
-        ], correct: "A", explanation: "Explanation for this Microbiology 2016 question." }
+          { letter: "A", text: "Rhinovirus" },
+          { letter: "B", text: "Coxsackie B virus" },
+          { letter: "C", text: "Echovirus" },
+          { letter: "D", text: "All of the above" }
+        ],
+        correct: "A",
+        explanation: "<strong>Rhinovirus</strong> is the most common cause of the <strong>common cold (acute viral rhinitis)</strong>. Presents with clear watery rhinorrhea, nasal obstruction, sneezing, and sore throat. Fever is usually absent or mild in adults."
+      },
+      {
+        q: "Antigenic variations in the surface glycoproteins hemagglutinin (HA) and neuraminidase (NA) are used to divide influenza viruses into:",
+        options: [
+          { letter: "A", text: "Genera" },
+          { letter: "B", text: "Subfamilies" },
+          { letter: "C", text: "Subtypes" },
+          { letter: "D", text: "Types A, B, & C" }
+        ],
+        correct: "C",
+        explanation: "HA and NA combinations are used to identify influenza <strong>subtypes</strong>, especially for Influenza A (e.g., H1N1, H3N2). Influenza <strong>types</strong> (A, B, C) are based on internal nucleoprotein and matrix proteins."
+      },
+      {
+        q: "The following information is indicated in the standard nomenclature system for human isolates of influenza virus EXCEPT:",
+        options: [
+          { letter: "A", text: "Geographic origin" },
+          { letter: "B", text: "Type" },
+          { letter: "C", text: "Host of origin" },
+          { letter: "D", text: "Year of isolation" }
+        ],
+        correct: "C",
+        explanation: "Influenza nomenclature includes type + geographic origin + isolate number + year (e.g., <strong>A/California/04/2009</strong>). For human isolates, the host is understood to be human, so it is <strong>not included</strong>."
+      },
+      {
+        q: "Minor antigenic changes in influenza viruses are:",
+        options: [
+          { letter: "A", text: "Result in a new subtype" },
+          { letter: "B", text: "Due to genetic reassortment" },
+          { letter: "C", text: "The cause of pandemics" },
+          { letter: "D", text: "Result in amino acid changes in the protein" }
+        ],
+        correct: "D",
+        explanation: "Minor antigenic changes = <strong>antigenic drift</strong>. They result from <strong>point mutations</strong> in HA or NA genes, leading to amino acid changes in the surface proteins. Cause seasonal epidemics — not pandemics (those involve antigenic shift)."
+      },
+      {
+        q: "Which factor does NOT contribute to antigenic shift in influenza viruses?",
+        options: [
+          { letter: "A", text: "Accumulation of point mutations in the gene" },
+          { letter: "B", text: "Segmented nature of the viral genome" },
+          { letter: "C", text: "Coinfection of a host cell by two different viruses of a given type" },
+          { letter: "D", text: "Genetic reassortment" }
+        ],
+        correct: "A",
+        explanation: "Antigenic shift involves <strong>genetic reassortment</strong> of the segmented influenza genome during coinfection. <strong>Point mutations</strong> cause antigenic <strong>drift</strong> (not shift)."
+      },
+      {
+        q: "Bacterial etiologic agents of pharyngitis or tonsillitis include:",
+        options: [
+          { letter: "A", text: "Streptococcus pyogenes" },
+          { letter: "B", text: "Corynebacterium diphtheriae" },
+          { letter: "C", text: "Neisseria gonorrhoeae" },
+          { letter: "D", text: "All of the above" }
+        ],
+        correct: "D",
+        explanation: "All three can cause pharyngitis/tonsillitis. <strong>S. pyogenes</strong> is the most common. <strong>C. diphtheriae</strong> produces a gray pseudomembrane. <strong>N. gonorrhoeae</strong> can cause pharyngitis via orogenital exposure."
+      },
+      {
+        q: "Which virulence factor of S. pyogenes is responsible for the characteristic β-hemolysis on blood agar?",
+        options: [
+          { letter: "A", text: "Streptolysin O" },
+          { letter: "B", text: "Streptolysin S" },
+          { letter: "C", text: "Streptokinase" },
+          { letter: "D", text: "Deoxyribonuclease" }
+        ],
+        correct: "B",
+        explanation: "<strong>Streptolysin S</strong> is responsible for the β-hemolysis seen on routine blood agar. Streptolysin O is oxygen-labile; antibodies against it produce the <strong>ASO titer</strong>."
+      },
+      {
+        q: "Initial attachment of Neisseria gonorrhoeae to the host cell is mediated by:",
+        options: [
+          { letter: "A", text: "Opa protein" },
+          { letter: "B", text: "Pili" },
+          { letter: "C", text: "Por protein" },
+          { letter: "D", text: "Lipooligosaccharide" }
+        ],
+        correct: "B",
+        explanation: "<strong>Type IV pili</strong> of N. gonorrhoeae mediate <strong>initial attachment</strong> to mucosal epithelial cells. Opa proteins contribute to tighter adherence/invasion after initial attachment. LOS contributes to inflammation."
+      },
+      {
+        q: "The limitation of direct antigen tests for rapidly detecting S. pyogenes in throat swabs is:",
+        options: [
+          { letter: "A", text: "Lack of sensitivity" },
+          { letter: "B", text: "False-positive result" },
+          { letter: "C", text: "Lack of specificity" },
+          { letter: "D", text: "All of the above" }
+        ],
+        correct: "A",
+        explanation: "The main limitation of rapid antigen detection tests (RADTs) for Group A Strep is <strong>imperfect sensitivity</strong> (false negatives). Specificity is high, so positive results are generally reliable."
+      },
+      {
+        q: "Acute diseases of the middle airway are usually caused by viral agents EXCEPT:",
+        options: [
+          { letter: "A", text: "Bronchitis" },
+          { letter: "B", text: "Laryngitis" },
+          { letter: "C", text: "Epiglottitis" },
+          { letter: "D", text: "Laryngotracheitis" }
+        ],
+        correct: "C",
+        explanation: "<strong>Epiglottitis</strong> is traditionally associated with <strong>bacterial infection</strong>, especially Haemophilus influenzae type b (Hib) in unvaccinated children. Bronchitis, laryngitis, and laryngotracheitis (croup) are commonly viral."
+      },
+      {
+        q: "Growth of which bacterium requires supplementation of media with hemin and NAD?",
+        options: [
+          { letter: "A", text: "Bordetella pertussis" },
+          { letter: "B", text: "Haemophilus influenzae" },
+          { letter: "C", text: "Streptococcus pneumoniae" },
+          { letter: "D", text: "Chlamydophila pneumoniae" }
+        ],
+        correct: "B",
+        explanation: "<strong>Haemophilus influenzae</strong> requires <strong>X factor (hemin)</strong> and <strong>V factor (NAD)</strong> for growth. Grows on <strong>chocolate agar</strong> and shows satellitism around S. aureus on blood agar."
+      },
+      {
+        q: "Haemophilus influenzae is subdivided into eight biotypes as determined by:",
+        options: [
+          { letter: "A", text: "Indole production" },
+          { letter: "B", text: "Urease activity" },
+          { letter: "C", text: "Ornithine decarboxylase activity" },
+          { letter: "D", text: "All of the above" }
+        ],
+        correct: "D",
+        explanation: "H. influenzae biotypes I–VIII are determined by three biochemical tests: <strong>indole production, urease activity, and ornithine decarboxylase activity</strong>. (Biotype ≠ serotype: serotype is based on capsule antigens.)"
+      },
+      {
+        q: "The risk of epiglottitis caused by Haemophilus influenzae is significantly greater in:",
+        options: [
+          { letter: "A", text: "Patients with no anti-PRP antibodies" },
+          { letter: "B", text: "Those with depletion of complement" },
+          { letter: "C", text: "Those who have undergone splenectomy" },
+          { letter: "D", text: "All of the above" }
+        ],
+        correct: "D",
+        explanation: "All three increase risk of invasive Hib disease. The Hib capsule contains <strong>polyribosylribitol phosphate (PRP)</strong>. Anti-PRP antibodies, complement, and splenic function are all important for clearance of encapsulated organisms."
+      },
+      {
+        q: "Which virulence factor facilitates subsequent migration of Streptococcus pneumoniae to the lower respiratory tract?",
+        options: [
+          { letter: "A", text: "Capsule" },
+          { letter: "B", text: "Secretory IgA protease" },
+          { letter: "C", text: "Teichoic acid" },
+          { letter: "D", text: "All of the above" }
+        ],
+        correct: "D",
+        explanation: "<strong>Capsule</strong> is antiphagocytic and the major virulence factor. <strong>IgA protease</strong> helps evade mucosal immunity. <strong>Teichoic acids</strong> contribute to adherence and inflammation. Together they enable progression from nasopharynx to lower respiratory tract."
+      },
+      {
+        q: "Tissue destruction by Streptococcus pneumoniae is mediated by:",
+        options: [
+          { letter: "A", text: "Teichoic acid" },
+          { letter: "B", text: "Peptidoglycan fragments" },
+          { letter: "C", text: "Pneumolysin" },
+          { letter: "D", text: "All of the above" }
+        ],
+        correct: "D",
+        explanation: "<strong>Pneumolysin</strong> is a pore-forming toxin that damages host cell membranes. <strong>Peptidoglycan fragments and teichoic acids</strong> trigger inflammation and contribute to tissue injury."
+      },
+      {
+        q: "Which virulence factor of S. aureus functions as a superantigen?",
+        options: [
+          { letter: "A", text: "Toxic shock syndrome toxin-1 (TSST-1)" },
+          { letter: "B", text: "Panton-Valentine (P-V) leukocidin" },
+          { letter: "C", text: "Alpha toxin" },
+          { letter: "D", text: "Sphingomyelinase C" }
+        ],
+        correct: "A",
+        explanation: "<strong>TSST-1</strong> is a classic S. aureus superantigen. It cross-links MHC II on antigen-presenting cells with T-cell receptors, causing massive cytokine release and toxic shock syndrome (fever, hypotension, rash, multi-organ dysfunction)."
+      },
+      {
+        q: "The diffuse vascular damage associated with Neisseria meningitidis infection is largely attributed to:",
+        options: [
+          { letter: "A", text: "Meningococcal pili" },
+          { letter: "B", text: "Capsule" },
+          { letter: "C", text: "Lipooligosaccharide (LOS)" },
+          { letter: "D", text: "All of the above" }
+        ],
+        correct: "C",
+        explanation: "<strong>Lipooligosaccharide (LOS)</strong> is the endotoxin-like molecule responsible for massive inflammation, vascular damage, septic shock, and DIC in meningococcemia. Pili mediate attachment; capsule is antiphagocytic."
+      },
+      {
+        q: "A 2-year-old unvaccinated child has dysphonia, grayish exudate over the tonsils, larynx and pharynx, and massive tender cervical lymphadenitis. What is the most likely cause?",
+        options: [
+          { letter: "A", text: "Corynebacterium diphtheriae" },
+          { letter: "B", text: "Streptococcus pneumoniae" },
+          { letter: "C", text: "Bordetella pertussis" },
+          { letter: "D", text: "Haemophilus influenzae" }
+        ],
+        correct: "A",
+        explanation: "Classic <strong>respiratory diphtheria</strong>. Clues: unvaccinated child + gray pseudomembrane + dysphonia + massive cervical lymphadenopathy (\"bull neck\"). The toxin inhibits EF-2 → blocks protein synthesis."
+      },
+      {
+        q: "Which of the following bacteria is an obligate aerobe, a highly contagious pathogen that may cause serious respiratory infections in young children?",
+        options: [
+          { letter: "A", text: "Haemophilus ducreyi" },
+          { letter: "B", text: "Francisella tularensis" },
+          { letter: "C", text: "Haemophilus parainfluenzae" },
+          { letter: "D", text: "Bordetella pertussis" }
+        ],
+        correct: "D",
+        explanation: "<strong>Bordetella pertussis</strong> is a strict/obligate aerobe, Gram-negative coccobacillus, and a highly contagious cause of <strong>pertussis (whooping cough)</strong>. Major virulence factors include pertussis toxin, adenylate cyclase toxin, and tracheal cytotoxin."
+      },
+      {
+        q: "A 69-year-old woman has fever, body aches, mild cough, and lobar pneumonia. Round diplococci in chains are isolated. What is the likely pathogen?",
+        options: [
+          { letter: "A", text: "Streptococcus pneumoniae" },
+          { letter: "B", text: "Neisseria gonorrhoeae" },
+          { letter: "C", text: "Haemophilus influenzae" },
+          { letter: "D", text: "Bordetella pertussis" }
+        ],
+        correct: "A",
+        explanation: "<strong>Streptococcus pneumoniae</strong> is a Gram-positive, lancet-shaped, encapsulated diplococcus. Classic cause of <strong>lobar pneumonia</strong> in older adults."
+      },
+      {
+        q: "Which human fungal species, also present in the lungs of animals, causes pneumonia in immunocompromised patients?",
+        options: [
+          { letter: "A", text: "Aspergillus niger" },
+          { letter: "B", text: "Pneumocystis jirovecii" },
+          { letter: "C", text: "Penicillium marneffei" },
+          { letter: "D", text: "Fusarium keratitis" }
+        ],
+        correct: "B",
+        explanation: "<strong>Pneumocystis jirovecii</strong> causes <strong>Pneumocystis pneumonia (PCP)</strong>, especially in advanced HIV/AIDS with low CD4 counts. Progressive dry cough + fever + shortness of breath + diffuse bilateral infiltrates."
+      },
+      {
+        q: "\"Whooping cough\" infection of the respiratory tract in children is caused by which Gram-negative pathogen?",
+        options: [
+          { letter: "A", text: "Bordetella pertussis" },
+          { letter: "B", text: "Mycoplasma pneumoniae" },
+          { letter: "C", text: "Mycobacterium tuberculosis" },
+          { letter: "D", text: "Salmonella typhi" }
+        ],
+        correct: "A",
+        explanation: "<strong>Bordetella pertussis</strong> — Gram-negative coccobacillus that causes pertussis (whooping cough). Classic course: catarrhal → paroxysmal (with inspiratory whoop) → convalescent."
+      },
+      {
+        q: "Among the following Gram-negative bacteria, which has been identified as the primary causative agent of hospital-acquired pneumonia in patients within healthcare facilities?",
+        options: [
+          { letter: "A", text: "Escherichia coli" },
+          { letter: "B", text: "Bordetella pertussis" },
+          { letter: "C", text: "Pseudomonas aeruginosa" },
+          { letter: "D", text: "Yersinia pestis" }
+        ],
+        correct: "C",
+        explanation: "<strong>Pseudomonas aeruginosa</strong> is a classic cause of <strong>HAP and VAP</strong>. Thrives in moist hospital environments. Often multidrug resistant, making treatment challenging."
+      },
+      {
+        q: "Which bacterium is a common cause of chronic lower respiratory tract infection?",
+        options: [
+          { letter: "A", text: "Clostridium difficile" },
+          { letter: "B", text: "Mycobacterium tuberculosis" },
+          { letter: "C", text: "Moraxella catarrhalis" },
+          { letter: "D", text: "Staphylococcus epidermidis" }
+        ],
+        correct: "B",
+        explanation: "<strong>Mycobacterium tuberculosis</strong> causes chronic pulmonary disease with persistent cough, sputum production, fever, night sweats, weight loss, and hemoptysis. Acid-fast bacillus due to mycolic acid in the cell wall."
+      },
+      {
+        q: "TB disease is difficult to control and prevent mainly because of diagnostic challenges. Which technology is most amenable to a point-of-care testing program where treatment decisions can be made in the same visit?",
+        options: [
+          { letter: "A", text: "Smear microscopy" },
+          { letter: "B", text: "GeneXpert MTB/RIF" },
+          { letter: "C", text: "Culture" },
+          { letter: "D", text: "Serological test" }
+        ],
+        correct: "B",
+        explanation: "<strong>GeneXpert MTB/RIF</strong> — rapid molecular test that detects M. tuberculosis and rifampicin resistance directly from a clinical specimen. Much faster than culture, ideal for same-visit treatment decisions."
+      },
+      {
+        q: "Which of the following is NOT caused by a dimorphic fungus?",
+        options: [
+          { letter: "A", text: "Histoplasmosis" },
+          { letter: "B", text: "Coccidioidomycosis" },
+          { letter: "C", text: "Blastomycosis" },
+          { letter: "D", text: "Aspergillosis" }
+        ],
+        correct: "D",
+        explanation: "Histoplasma, Coccidioides, and Blastomyces are classic <strong>dimorphic fungi</strong> (mold in environment, yeast in tissue). <strong>Aspergillus</strong> is a filamentous mold, <strong>not a classic dimorphic fungus</strong>. Produces septate hyphae with acute-angle branching."
+      },
+      {
+        q: "The initial therapy of tuberculosis includes which drug regimen?",
+        options: [
+          { letter: "A", text: "Streptomycin and rifampin" },
+          { letter: "B", text: "Isoniazid, streptomycin, and ethambutol" },
+          { letter: "C", text: "Rifampin, isoniazid, and ciprofloxacin" },
+          { letter: "D", text: "Isoniazid, rifampin, pyrazinamide, and ethambutol" }
+        ],
+        correct: "D",
+        explanation: "Standard initial therapy for drug-susceptible active TB = <strong>HRZE: Isoniazid + Rifampin + Pyrazinamide + Ethambutol</strong>. Multiple drugs prevent emergence of resistance."
+      },
+      {
+        q: "Which bacterial pathogen is the most common cause of community-acquired pneumonia in adults?",
+        options: [
+          { letter: "A", text: "Staphylococcus aureus" },
+          { letter: "B", text: "Mycoplasma pneumoniae" },
+          { letter: "C", text: "Streptococcus pneumoniae" },
+          { letter: "D", text: "Chlamydophila pneumoniae" }
+        ],
+        correct: "C",
+        explanation: "<strong>Streptococcus pneumoniae</strong> is the classic most common bacterial cause of CAP. Encapsulated, Gram-positive, lancet-shaped diplococcus. Presents with fever, productive cough, pleuritic chest pain, and lobar consolidation."
+      },
+      {
+        q: "Which bacterium is a coliform commonly found in the gut, with a prominent capsule, lactose fermentation, non-motility, and oxidase negativity, and can cause pneumonia?",
+        options: [
+          { letter: "A", text: "Salmonella typhi" },
+          { letter: "B", text: "Klebsiella pneumoniae" },
+          { letter: "C", text: "Shigella flexneri" },
+          { letter: "D", text: "Vibrio cholerae" }
+        ],
+        correct: "B",
+        explanation: "<strong>Klebsiella pneumoniae</strong> — Gram-negative, encapsulated, lactose-fermenting, non-motile rod. Large capsule is the major virulence factor. Can cause pneumonia with thick, blood-tinged sputum, especially in hospitalized/debilitated patients."
+      },
+      {
+        q: "Cell wall synthesis inhibitors are effective against the following organism EXCEPT:",
+        options: [
+          { letter: "A", text: "Streptococcus pneumoniae" },
+          { letter: "B", text: "Staphylococcus aureus" },
+          { letter: "C", text: "Mycoplasma pneumoniae" },
+          { letter: "D", text: "Treponema pallidum" }
+        ],
+        correct: "C",
+        explanation: "<strong>Mycoplasma pneumoniae</strong> has <strong>no cell wall</strong>. β-lactams (which target cell wall synthesis) are ineffective. It has a membrane containing sterols instead of peptidoglycan."
+      }
     ]
   },
-  {
-    id: "micro-2017", subject: "Microbiology", topic: "General", year: 2017,
-    title: "Microbiology 2017", icon: "🦠", section: "PLATE I",
-    questions: [
-      { q: "Sample Microbiology 2017 question:",
-        options: [
-          { letter: "A", text: "Option A" }, { letter: "B", text: "Option B" },
-          { letter: "C", text: "Option C" }, { letter: "D", text: "Option D" }, { letter: "E", text: "Option E" }
-        ], correct: "A", explanation: "Explanation for this Microbiology 2017 question." }
-    ]
-  },
-
   /* ========== PATHOLOGY ========== */
   {
     id: "patho-2014", subject: "Pathology", topic: "General", year: 2014,
