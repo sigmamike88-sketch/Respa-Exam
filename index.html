@@ -662,17 +662,128 @@ const QUIZ_DATA = [
     ]
   },
   {
-    id: "biochem-2017", subject: "Biochemistry", topic: "General", year: 2017,
-    title: "Biochemistry 2017", icon: "🧬", section: "PLATE I",
+    id: "biochem-2017",
+    subject: "Biochemistry",
+    topic: "Hemoglobin",
+    year: 2017,
+    title: "Biochemistry 2017 E.C",
+    icon: "🧬",
+    section: "Hemoglobin & Respiratory Function",
     questions: [
-      { q: "Sample Biochemistry 2017 question:",
+      {
+        q: "What is the role of hemoglobin in carbon dioxide transport?",
         options: [
-          { letter: "A", text: "Option A" }, { letter: "B", text: "Option B" },
-          { letter: "C", text: "Option C" }, { letter: "D", text: "Option D" }, { letter: "E", text: "Option E" }
-        ], correct: "A", explanation: "Explanation for this Biochemistry 2017 question." }
+          { letter: "A", text: "It carries carbon dioxide dissolved in plasma" },
+          { letter: "B", text: "It breaks down carbon dioxide into its constituent elements" },
+          { letter: "C", text: "It converts carbon dioxide into a soluble form for transportation" },
+          { letter: "D", text: "It binds to carbon dioxide and releases it in the lungs" }
+        ],
+        correct: "D",
+        explanation: "Hemoglobin transports CO₂ mainly by binding CO₂ to the <strong>amino groups of its globin chains</strong>, forming <strong>carbaminohemoglobin</strong>. This binding is reversible — hemoglobin picks up CO₂ in tissues and releases it in the lungs. Hemoglobin also helps transport H⁺, supporting conversion of CO₂ to bicarbonate."
+      },
+      {
+        q: "In deoxyhemoglobin (Hb), the Fe²⁺ is 5-coordinated to:",
+        options: [
+          { letter: "A", text: "Four nitrogens of heme and the proximal His of Hb" },
+          { letter: "B", text: "Four nitrogens of heme and an O₂ molecule" },
+          { letter: "C", text: "Two nitrogens of heme and three His residues in Hb" },
+          { letter: "D", text: "Two nitrogens of heme and three water molecules" }
+        ],
+        correct: "A",
+        explanation: "In deoxyhemoglobin, Fe²⁺ is in a <strong>5-coordinate state</strong>: attached to the <strong>four nitrogen atoms of the porphyrin ring</strong> and the <strong>proximal histidine (His F8)</strong>. The sixth coordination position is unoccupied, allowing oxygen to bind when hemoglobin becomes oxygenated."
+      },
+      {
+        q: "Which of the following statements is NOT true?",
+        options: [
+          { letter: "A", text: "Hemoglobin acts as an intracellular buffer" },
+          { letter: "B", text: "The proximal and distal histidine residues lie on the same side of the heme ring" },
+          { letter: "C", text: "Exposure of the heme ring to water results in oxidation" },
+          { letter: "D", text: "Protoporphyrin IX is a tetrapyrrole ring" }
+        ],
+        correct: "B",
+        explanation: "The <strong>proximal histidine (His F8)</strong> and <strong>distal histidine (His E7)</strong> are located on <strong>opposite sides</strong> of the heme plane. The proximal His directly coordinates with Fe²⁺, while the distal His does not directly bind iron — it helps stabilize bound O₂ and reduces CO binding."
+      },
+      {
+        q: "Which of the following describes the Bohr Effect?",
+        options: [
+          { letter: "A", text: "Lowering the pH results in the release of O₂ from oxyhemoglobin" },
+          { letter: "B", text: "Increasing the pressure of CO₂ results in the release of O₂ from oxyhemoglobin" },
+          { letter: "C", text: "Increasing the pH increases the T-form of hemoglobin" },
+          { letter: "D", text: "All of the above" },
+          { letter: "E", text: "None of the above" }
+        ],
+        correct: "A",
+        explanation: "The <strong>Bohr effect</strong> refers to the decrease in hemoglobin's affinity for O₂ when CO₂ increases or pH decreases. In active tissues, CO₂ production increases, leading to more H⁺ and lower pH. This stabilizes the <strong>T (tense) state</strong> and promotes O₂ unloading to tissues."
+      },
+      {
+        q: "What contains 2 alpha chains and 2 beta chains that assume a quaternary higher-order conformation?",
+        options: [
+          { letter: "A", text: "Maternal hemoglobin" },
+          { letter: "B", text: "Myoglobin" },
+          { letter: "C", text: "Immunoglobulin" },
+          { letter: "D", text: "Fetal hemoglobin" }
+        ],
+        correct: "A",
+        explanation: "<strong>Maternal/adult hemoglobin (HbA)</strong> is composed of two α-globin chains and two β-globin chains (<strong>α₂β₂</strong>). These four polypeptide chains interact to form the <strong>quaternary structure</strong>. Each chain has a heme group with Fe²⁺, so HbA can bind up to four O₂ molecules. (Fetal hemoglobin HbF is α₂γ₂.)"
+      },
+      {
+        q: "When binding with oxygen, what type of binding curve does hemoglobin have?",
+        options: [
+          { letter: "A", text: "Sigmoidal" },
+          { letter: "B", text: "Hyperbolic" },
+          { letter: "C", text: "Linear" },
+          { letter: "D", text: "Both A and B" }
+        ],
+        correct: "A",
+        explanation: "Hemoglobin has a <strong>sigmoidal (S-shaped)</strong> oxygen-binding curve due to its four heme groups and <strong>positive cooperativity</strong>. Myoglobin, with one heme group, shows a <strong>hyperbolic</strong> curve because it does not exhibit cooperative binding."
+      },
+      {
+        q: "Which of the following statements concerning the binding of oxygen by hemoglobin is NOT correct?",
+        options: [
+          { letter: "A", text: "The Bohr effect results in a lower affinity for oxygen at low pH values" },
+          { letter: "B", text: "Carbon dioxide increases the oxygen affinity of hemoglobin by binding to the C-terminal groups of the polypeptide chains" },
+          { letter: "C", text: "The oxygen affinity of hemoglobin increases as the percentage saturation increases" },
+          { letter: "D", text: "The hemoglobin tetramer binds only one molecule of 2,3-BPG" },
+          { letter: "E", text: "Deoxyhemoglobin has a high affinity for protons (H⁺)" }
+        ],
+        correct: "B",
+        explanation: "The statement is <strong>NOT correct</strong> because CO₂ binds to the <strong>N-terminal amino groups</strong> of the globin chains (not C-terminal) to form carbaminohemoglobin, and this <strong>decreases</strong> hemoglobin's affinity for O₂ — favoring the T state and promoting O₂ unloading."
+      },
+      {
+        q: "When will hemoglobin have the highest affinity for oxygen?",
+        options: [
+          { letter: "A", text: "When carbon monoxide levels are high" },
+          { letter: "B", text: "When pH is high" },
+          { letter: "C", text: "When 2,3-bisphosphoglycerate levels are high" },
+          { letter: "D", text: "None of the above" }
+        ],
+        correct: "B",
+        explanation: "Hemoglobin's oxygen affinity increases when <strong>pH is high</strong>. High pH means lower H⁺ concentration, which favors the <strong>R (relaxed) state</strong> — hemoglobin binds oxygen more readily. This is the opposite of the Bohr effect (↓ pH → O₂ unloading)."
+      },
+      {
+        q: "What will happen at high elevations?",
+        options: [
+          { letter: "A", text: "2,3-BPG concentration increases and hemoglobin's affinity for oxygen decreases" },
+          { letter: "B", text: "2,3-BPG concentration decreases and hemoglobin's affinity for oxygen decreases" },
+          { letter: "C", text: "2,3-BPG concentration decreases and hemoglobin's affinity for oxygen decreases" },
+          { letter: "D", text: "2,3-BPG concentration increases and hemoglobin's affinity for oxygen increases" }
+        ],
+        correct: "A",
+        explanation: "At high altitude, low atmospheric oxygen pressure causes reduced oxygen availability. In response, RBCs increase production of <strong>2,3-BPG</strong>. Increased 2,3-BPG binds deoxyhemoglobin and stabilizes the <strong>T state</strong>, <strong>decreasing</strong> hemoglobin's affinity for oxygen. This shifts the dissociation curve to the <strong>right</strong>, improving tissue oxygen delivery."
+      },
+      {
+        q: "Identify the phospholipid that possesses surfactant activity and is synthesized shortly before parturition in full-term infants. Its deficiency in the lungs can cause respiratory distress syndrome (RDS).",
+        options: [
+          { letter: "A", text: "Dipalmitoylphosphatidylethanolamine" },
+          { letter: "B", text: "Dipalmitoylphosphatidylcholine" },
+          { letter: "C", text: "Dipalmitoylphosphatidylserine" },
+          { letter: "D", text: "None of the above" }
+        ],
+        correct: "B",
+        explanation: "<strong>Dipalmitoylphosphatidylcholine (DPPC)</strong>, also called dipalmitoyl lecithin, is the major phospholipid responsible for the surface-tension-lowering activity of pulmonary surfactant. It is produced by type II pneumocytes and increases near term. Insufficient DPPC in premature infants leads to neonatal RDS."
+      }
     ]
   },
-
   /* ========== PHYSIOLOGY ========== */
   {
     id: "physio-2014", subject: "Physiology", topic: "General", year: 2014,
