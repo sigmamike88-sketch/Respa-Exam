@@ -1369,6 +1369,16 @@ function renderYears() {
     });
   });
 
+  const backBtn = document.getElementById("backToCoursesBtn");
+  if (backBtn) {
+    backBtn.addEventListener("click", () => {
+      state.view = "courses";
+      state.course = null;
+      render();
+      window.scrollTo(0, 0);
+    });
+  }
+
   document.querySelectorAll("[data-exam]").forEach(el => {
     el.addEventListener("click", () => {
       const exam = QUIZ_DATA.find(e => e.id === el.dataset.exam);
