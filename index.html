@@ -584,15 +584,70 @@ const QUIZ_DATA = [
         ], correct: "A", explanation: "Explanation for this Biochemistry 2014 question." }
     ]
   },
-  {
-    id: "biochem-2015", subject: "Biochemistry", topic: "General", year: 2015,
-    title: "Biochemistry 2015", icon: "🧬", section: "PLATE I",
+   {
+    id: "biochem-2015",
+    subject: "Biochemistry",
+    topic: "Hemoglobin",
+    year: 2015,
+    title: "Biochemistry 2015 E.C",
+    icon: "🧬",
+    section: "Hemoglobin & Respiratory Function",
     questions: [
-      { q: "Sample Biochemistry 2015 question:",
+      {
+        q: "The conformational changes from the T (tense) to the R (relaxed) state are initiated by:",
         options: [
-          { letter: "A", text: "Option A" }, { letter: "B", text: "Option B" },
-          { letter: "C", text: "Option C" }, { letter: "D", text: "Option D" }, { letter: "E", text: "Option E" }
-        ], correct: "A", explanation: "Explanation for this Biochemistry 2015 question." }
+          { letter: "A", text: "Movement of the proximal histidine towards the heme" },
+          { letter: "B", text: "Movement of the F-helix, which contains the proximal His" },
+          { letter: "C", text: "Reorganization of protein-protein contacts between the heme" },
+          { letter: "D", text: "Binding of oxygen to the heme" }
+        ],
+        correct: "D",
+        explanation: "Hemoglobin exists in two conformations: the <strong>T (tense)</strong> state (low O₂ affinity) and the <strong>R (relaxed)</strong> state (high O₂ affinity). The transition is <strong>initiated when oxygen binds to the iron (Fe²⁺) of the heme group</strong>, triggering structural changes that increase oxygen affinity of the remaining subunits — <strong>cooperative binding</strong>."
+      },
+      {
+        q: "In sickle cell anemia, the defect lies in which polypeptide?",
+        options: [
+          { letter: "A", text: "Alpha chain" },
+          { letter: "B", text: "Beta chain" },
+          { letter: "C", text: "Gamma chain" },
+          { letter: "D", text: "Delta chain" }
+        ],
+        correct: "B",
+        explanation: "Sickle cell anemia is an autosomal recessive hemoglobinopathy caused by a point mutation in the <strong>β-globin (beta) chain</strong>. Glutamic acid is replaced by valine at the <strong>6th position</strong> of the β-globin chain, producing <strong>hemoglobin S (HbS)</strong>. Under low oxygen tension, HbS polymerizes, causing sickling, hemolysis, and vaso-occlusion."
+      },
+      {
+        q: "In hemoglobin, the innate affinity of heme for carbon monoxide is diminished by the presence of:",
+        options: [
+          { letter: "A", text: "His E7" },
+          { letter: "B", text: "His F9" },
+          { letter: "C", text: "Gly B6" },
+          { letter: "D", text: "Thr C4" }
+        ],
+        correct: "A",
+        explanation: "The <strong>distal histidine (His E7)</strong> reduces the naturally high affinity of heme for carbon monoxide (CO). It creates steric hindrance, preventing CO from binding in its preferred linear orientation. This favors oxygen binding and reduces CO affinity from ~25,000-fold to ~200–250-fold greater than oxygen."
+      },
+      {
+        q: "The walls of the alveoli are composed of two types of cells, type I and type II. The function of type II is to:",
+        options: [
+          { letter: "A", text: "Secrete surfactant" },
+          { letter: "B", text: "Trap dust and other debris" },
+          { letter: "C", text: "Replace mucus in the alveoli" },
+          { letter: "D", text: "Protect the lungs from bacterial invasion" }
+        ],
+        correct: "A",
+        explanation: "<strong>Type II alveolar cells (type II pneumocytes)</strong> are cuboidal epithelial cells that secrete <strong>pulmonary surfactant</strong>, a phospholipid-rich substance that reduces surface tension within the alveoli. This prevents alveolar collapse (atelectasis), improves lung compliance, and reduces the work of breathing. Type II pneumocytes also serve as progenitor cells after injury."
+      },
+      {
+        q: "Carbon monoxide poisoning decreases O₂ delivery and causes tissue hypoxia and may lead to death in untreated individuals by:",
+        options: [
+          { letter: "A", text: "Competitively binds to the O₂-binding site of hemoglobin at lower affinity" },
+          { letter: "B", text: "Reducing the ability of the hemoglobin molecule to release oxygen bound to other O₂-binding sites" },
+          { letter: "C", text: "Competitively interferes with the binding of 2,3-BPG to hemoglobin" },
+          { letter: "D", text: "All of the above" }
+        ],
+        correct: "B",
+        explanation: "Carbon monoxide (CO) binds to the heme iron (Fe²⁺) with an affinity <strong>200–250 times greater than oxygen</strong>. When CO binds, it increases the affinity of the remaining heme sites for oxygen, shifting the oxygen-hemoglobin dissociation curve to the <strong>left</strong>. Hemoglobin holds onto oxygen more tightly, <strong>reducing oxygen release to tissues</strong> — causing tissue hypoxia."
+      }
     ]
   },
   {
