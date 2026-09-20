@@ -651,14 +651,124 @@ const QUIZ_DATA = [
     ]
   },
   {
-    id: "biochem-2016", subject: "Biochemistry", topic: "General", year: 2016,
-    title: "Biochemistry 2016", icon: "🧬", section: "PLATE I",
+    id: "biochem-2016",
+    subject: "Biochemistry",
+    topic: "Hemoglobin",
+    year: 2016,
+    title: "Biochemistry 2016 E.C",
+    icon: "🧬",
+    section: "Hemoglobin & Respiratory Function",
     questions: [
-      { q: "Sample Biochemistry 2016 question:",
+      {
+        q: "Which of the following would most readily bind oxygen?",
         options: [
-          { letter: "A", text: "Option A" }, { letter: "B", text: "Option B" },
-          { letter: "C", text: "Option C" }, { letter: "D", text: "Option D" }, { letter: "E", text: "Option E" }
-        ], correct: "A", explanation: "Explanation for this Biochemistry 2016 question." }
+          { letter: "A", text: "Hemoglobin (Hb) with one oxygen molecule bound" },
+          { letter: "B", text: "Hemoglobin (Hb) with no oxygen bound" },
+          { letter: "C", text: "Hemoglobin (Hb) with three oxygen molecules bound" },
+          { letter: "D", text: "Hemoglobin (Hb) with four oxygen molecules bound" }
+        ],
+        correct: "C",
+        explanation: "Hemoglobin exhibits <strong>positive cooperativity</strong>. As more O₂ molecules bind, hemoglobin shifts from the T (tense, low affinity) to the R (relaxed, high affinity) state. Therefore, Hb with <strong>three O₂ already bound</strong> has the highest affinity for binding the fourth. Hb with four O₂ is fully saturated and cannot bind more."
+      },
+      {
+        q: "All are true about surfactant except:",
+        options: [
+          { letter: "A", text: "Surfactant proteins A & D play an important role in the innate lung defense barrier against pathogenic organisms" },
+          { letter: "B", text: "Surfactant protein A both neutralizes and enhances the clearance of pathogens while modulating the inflammatory response" },
+          { letter: "C", text: "SP-B and SP-C are hydrophilic membrane proteins that are required for the proper biophysical function of the lung" },
+          { letter: "D", text: "The SP-B & SP-C proteins help spread the surfactant across the surface of the lung tissue, aiding in lowering surface tension" }
+        ],
+        correct: "C",
+        explanation: "Pulmonary surfactant is produced by type II pneumocytes and contains phospholipids + surfactant proteins (SP-A, SP-B, SP-C, SP-D). <strong>SP-B and SP-C are hydrophobic</strong>, not hydrophilic. They are essential for the proper spreading and stability of surfactant over the alveolar surface."
+      },
+      {
+        q: "What would happen to red blood cells if the heme group were removed from hemoglobin?",
+        options: [
+          { letter: "A", text: "Red blood cells would not be able to bind oxygen" },
+          { letter: "B", text: "Antioxidant protein function can be reduced, such as peroxidase and catalase" },
+          { letter: "C", text: "Red blood cells would be able to reproduce" },
+          { letter: "D", text: "All are the correct answer" }
+        ],
+        correct: "A",
+        explanation: "Hemoglobin consists of four globin chains, each with a heme group containing <strong>ferrous iron (Fe²⁺)</strong>. It is the <strong>heme group</strong> — not the globin — that binds oxygen reversibly. Without heme, hemoglobin loses its oxygen-binding sites and red blood cells cannot transport oxygen, causing tissue hypoxia."
+      },
+      {
+        q: "Commonest cause of respiratory distress in preterm infants is:",
+        options: [
+          { letter: "A", text: "Congenital heart disease" },
+          { letter: "B", text: "Pneumonia" },
+          { letter: "C", text: "Respiratory Distress Syndrome (RDS)" },
+          { letter: "D", text: "Esophageal atresia" }
+        ],
+        correct: "C",
+        explanation: "<strong>Respiratory Distress Syndrome (RDS)</strong>, also known as Hyaline Membrane Disease, is the most common cause of respiratory distress in preterm infants. It is caused by <strong>surfactant deficiency</strong> due to immaturity of type II pneumocytes. Without surfactant, alveolar surface tension increases, causing alveolar collapse (atelectasis) and impaired gas exchange."
+      },
+      {
+        q: "__ is the form in which carbon dioxide is non-covalently bound to the globin chain of hemoglobin and transported in the blood.",
+        options: [
+          { letter: "A", text: "Oxyhemoglobin" },
+          { letter: "B", text: "Deoxyhemoglobin" },
+          { letter: "C", text: "Carbaminohemoglobin" },
+          { letter: "D", text: "Methemoglobin" }
+        ],
+        correct: "C",
+        explanation: "<strong>Carbaminohemoglobin</strong> is formed when CO₂ binds to the amino groups of the globin chains of hemoglobin (not to the heme iron). This reversible binding accounts for about <strong>20–30% of CO₂ transport</strong>. Most CO₂ (~70%) is transported as bicarbonate (HCO₃⁻)."
+      },
+      {
+        q: "Which of the following is a genetic disorder of blood caused by a single nucleotide mutation in the β-globin gene?",
+        options: [
+          { letter: "A", text: "Diabetes mellitus" },
+          { letter: "B", text: "Methemoglobinemia" },
+          { letter: "C", text: "Sickle cell anemia" },
+          { letter: "D", text: "Gall bladder disease" }
+        ],
+        correct: "C",
+        explanation: "<strong>Sickle cell anemia</strong> is caused by a single nucleotide substitution in the β-globin gene (HBB). The 6th codon changes from GAG to GTG, replacing <strong>glutamic acid with valine</strong> at position 6 of the β-globin chain. This produces hemoglobin S (HbS), which polymerizes under low oxygen, causing sickling and vaso-occlusion."
+      },
+      {
+        q: "The walls of the alveoli are composed of two types of cells, type I and type II. The function of type II is to:",
+        options: [
+          { letter: "A", text: "Protect the lungs from bacterial invasion" },
+          { letter: "B", text: "Trap dust and other debris" },
+          { letter: "C", text: "Replace mucus in the alveoli" },
+          { letter: "D", text: "Secrete surfactant" }
+        ],
+        correct: "D",
+        explanation: "<strong>Type II pneumocytes</strong> produce and secrete <strong>pulmonary surfactant</strong>, a phospholipid-rich substance that reduces surface tension, prevents alveolar collapse (atelectasis) during expiration, and increases lung compliance. They also serve as progenitor cells that can regenerate both type I and type II cells after injury."
+      },
+      {
+        q: "Hemoglobin unlike myoglobin shows:",
+        options: [
+          { letter: "A", text: "Cooperative effect of combining with O₂" },
+          { letter: "B", text: "Sigmoidal curve of oxygen association" },
+          { letter: "C", text: "Cooperative index of 81" },
+          { letter: "D", text: "Hyperbolic curve of oxygen association" }
+        ],
+        correct: "B",
+        explanation: "Hemoglobin has four heme groups and exhibits <strong>positive cooperative binding</strong>, giving it its characteristic <strong>sigmoidal (S-shaped)</strong> oxygen dissociation curve. In contrast, myoglobin has only one heme group, does not exhibit cooperativity, and therefore has a <strong>hyperbolic</strong> curve."
+      },
+      {
+        q: "Hemoglobin is a buffer because of:",
+        options: [
+          { letter: "A", text: "Lysine residue" },
+          { letter: "B", text: "Histidine residue" },
+          { letter: "C", text: "Iron molecule" },
+          { letter: "D", text: "Cooperativity" }
+        ],
+        correct: "B",
+        explanation: "Hemoglobin acts as an important buffer primarily because of its numerous <strong>histidine residues</strong>. The imidazole group of histidine has a pKa close to physiological pH, allowing it to accept or donate H⁺. Deoxygenated hemoglobin is an even better buffer than oxygenated hemoglobin."
+      },
+      {
+        q: "Symptoms of low levels of hemoglobin are:",
+        options: [
+          { letter: "A", text: "Feelings of rage" },
+          { letter: "B", text: "Trouble breathing and weakness" },
+          { letter: "C", text: "Trouble breathing and fever" },
+          { letter: "D", text: "Weakness and excess hair growth" }
+        ],
+        correct: "B",
+        explanation: "Low hemoglobin (<strong>anemia</strong>) reduces the blood's ability to carry oxygen to tissues. Symptoms include <strong>weakness, fatigue, shortness of breath</strong> (especially on exertion), dizziness, palpitations, and pallor."
+      }
     ]
   },
   {
